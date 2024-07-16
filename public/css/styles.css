@@ -1,0 +1,145 @@
+﻿.custom-input {
+    color: white;
+    box-shadow: 0 1px 0 0 #e3f2fd !important;
+}
+
+    .custom-input:focus {
+        border-bottom: 1px solid #e3f2fd !important;
+        box-shadow: 0 1px 0 0 #e3f2fd !important;
+    }
+
+.input-field .prefix.active {
+    color: #e3f2fd !important;
+}
+
+.input-field label {
+    color: #e3f2fd !important;
+}
+
+.input-field input[type=email]:focus + label {
+    color: #e3f2fd !important;
+}
+
+.custom-padding {
+    padding-left: 10px;
+}
+
+.custom-input {
+    color: white;
+}
+
+.btn-spacing {
+    margin-right: 10px;
+}
+
+.card-panel {
+    padding: 20px;
+}
+
+.input-field input[type=text],
+.input-field input[type=password] {
+    color: white;
+}
+
+    .input-field input[type=text]:focus + label,
+    .input-field input[type=password]:focus + label {
+        color: #ffffff !important;
+    }
+
+    .input-field input[type=text]:focus,
+    .input-field input[type=password]:focus {
+        border-bottom: 1px solid #ffffff !important;
+        box-shadow: 0 1px 0 0 #ffffff !important;
+    }
+
+.nav-wrapper ul.right li {
+    margin-right: 15px;
+}
+
+.btn.logout-btn {
+    margin-top: 10px;
+    display: flex;
+    align-items: center;
+}
+
+    .btn.logout-btn .material-icons {
+        margin-left: 8px;
+    }
+
+.card-border {
+    border-radius: 5px !important;
+}
+
+.tabs .tab a {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.border-radius {
+    border-radius: 5px;
+    border: 0px solid transparent !important;
+    outline: none !important;
+}
+
+.font-color-white {
+    color: white !important;
+    font-weight: bold;
+    font-size: 14px;
+}
+
+#btnLogout, #btnPausa, #btnRetornar, #btnCallRequest, #btnLancarTabulacao, #btnListarDispositions, #btnHangup {
+    color: white;
+    border: none;
+    font-weight: bold;
+}
+
+    #btnLogout i {
+        margin-left: 8px;
+    }
+
+.centralizar-elementos {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 1;
+}
+
+.mdc-top-app-bar {
+    box-shadow: 0px 2px 4px -1px rgba(0, 0, 0, 0.2), 0px 4px 5px 0px rgba(0, 0, 0, 0.14), 0px 1px 10px 0px rgba(0, 0, 0, 0.12);
+    background-color: #0d47a1;
+}
+
+.custom-hr {
+    border: none;
+    height: 1px;
+    background-color: #0d47a1;
+    margin: 20px 0;
+}
+
+#toast-container {
+    right: 10px !important;
+    left: auto !important;
+    top: 65px !important;
+    bottom: auto !important;
+}
+
+.toast, btn {
+    font-weight: 500;
+    font-size: 14px;
+}
+
+#ligacaoManual .input-field.center-align {
+    position: relative;
+}
+
+#btnCallRequest {
+    position: absolute;
+    top: -2px !important;
+    left: 0 !important;
+}
+
+.container-gap {
+    display: flex;
+    gap: 10px;
+}
