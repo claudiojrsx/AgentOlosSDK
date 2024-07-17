@@ -128,6 +128,8 @@
     <Content Include="public\js\materialize\materialize.min.js" />
     <Content Include="public\js\olosagentsdk.js" />
     <Content Include="public\js\materialize\materialize.min.js.map" />
+    <Content Include="public\material-design-snackbar\mdc.snackbar.min.css" />
+    <Content Include="public\material-design-snackbar\mdc.snackbar.min.js" />
     <Content Include="public\material-design\js\material-components-web.js.map" />
     <Content Include="public\material-design\js\material-components-web.min.js.map" />
     <Content Include="public\material-design\material-components-web.css.map" />

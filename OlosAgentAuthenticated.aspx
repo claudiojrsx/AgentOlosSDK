@@ -13,6 +13,7 @@
     <!-- Material Design Components JS -->
     <script src="public/js/materialize/materialize.min.js"></script>
     <script src="public/material-design/js/material-components-web.min.js"></script>
+    <script src="public/material-design-snackbar/mdc.snackbar.min.js"></script>
     <script>mdc.autoInit();</script>
 
     <!-- Olos Agent SDK -->
@@ -23,13 +24,14 @@
     <link href="public/material-design/material-components-web.min.css" rel="stylesheet">
     <link href="public/material-design/material-icons.css" rel="stylesheet">
     <link href="public/css/materialize/materialize.min.css" rel="stylesheet">
+    <link href="public/material-design-snackbar/mdc.snackbar.min.css" rel="stylesheet"/>
     <link href="public/css/styles.css" rel="stylesheet">
 
     <title>Integração Olos</title>
     <link rel="icon" type="image/x-icon" href="public/favicon.png" />
 </head>
 
-<body class="white darken-3">
+<body>
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
 
@@ -64,9 +66,9 @@
 
                                 <asp:UpdatePanel ID="updatePanelHangup" UpdateMode="Conditional" runat="server">
                                     <ContentTemplate>
-                                        <button runat="server" id="btnHangup" class="mdc-button mdc-button--raised red darken-4" onserverclick="btnHangup_ServerClick">
+                                        <button id="btnHangup" class="mdc-button mdc-button--raised red darken-4">
                                             <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Desligar Chamada</span>
+                                            <span class="mdc-button__label">Desligar</span>
                                             <i class="material-icons mdc-button__icon" aria-hidden="true">phone_disabled</i>
                                         </button>
                                     </ContentTemplate>
@@ -74,8 +76,8 @@
 
                                 <hr class="custom-hr" />
                                 <div class="centralizar-elementos">
-                                    <p id="codigoAgentId" class="mr-3"></p>
-                                    <p id="codigoAcessoLink" class="mr-3"></p>
+                                    <p id="codigoAgentId"></p>
+                                    <p id="codigoAcessoLink"></p>
                                     <p id="campaignIdAtiva"></p>
                                     <p id="campaignIdReceptiva"></p>
                                 </div>
@@ -93,14 +95,20 @@
                                     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 container-gap">
                                         <button class="mdc-button mdc-button--raised green darken-4" id="btnPausa">
                                             <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Confirmar</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">pause</i>
+                                            <span class="mdc-button__label">Enviar pausa</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
                                         </button>
 
-                                        <button class="mdc-button mdc-button--raised yellow darken-4" id="btnRetornar" type="button">
+                                        <button class="mdc-button mdc-button--raised blue darken-4" id="btnRetornar" type="button">
                                             <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Retornar</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">stop</i>
+                                            <span class="mdc-button__label">Retornar pausa</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">flip_to_back</i>
+                                        </button>
+
+                                        <button class="mdc-button mdc-button--raised blue darken-4" id="btnListarReasons">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Listar pausas</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">list_alt</i>
                                         </button>
                                     </div>
                                 </div>
@@ -131,16 +139,27 @@
                                     </div>
 
                                     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 container-gap">
-                                        <button id="btnLancarTabulacao" class="mdc-button mdc-button--raised green darken-4" type="button">
+                                        <button id="btnThrowDisposition" class="mdc-button mdc-button--raised green darken-4" type="button">
                                             <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Lançar tabulação</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">check</i>
+                                            <span class="mdc-button__label">Tabular</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
+                                        </button>
+
+                                        <button id="btnSendDisposition" class="mdc-button mdc-button--raised blue darken-4" type="button">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Listar dispositions</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">list_alt</i>
                                         </button>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+            <div id="snackbar" class="mdc-snackbar">
+                <div class="mdc-snackbar__surface">
+                    <div class="mdc-snackbar__label" role="status" aria-live="polite"></div>
                 </div>
             </div>
         </section>

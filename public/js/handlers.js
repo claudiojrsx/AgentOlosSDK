@@ -3,6 +3,12 @@
     M.Tabs.init(tabs);
 });
 
+function showSnackbar(message) {
+    const snackbar = new mdc.snackbar.MDCSnackbar(document.querySelector('.mdc-snackbar'));
+    snackbar.labelText = message;
+    snackbar.open();
+}
+
 document.addEventListener("DOMContentLoaded", () => {
     function addButtonEventListener(buttonId, handlerFunctionName) {
         const button = document.getElementById(buttonId);
@@ -13,12 +19,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     typeof OlosAgent !== "undefined" &&
                     typeof OlosAgent[handlerFunctionName] === "function"
                 ) {
-                    if (handlerFunctionName === "agentLogout") {
-                        displayCountdownToast();
-                        OlosAgent[handlerFunctionName]();
-                    } else {
-                        OlosAgent[handlerFunctionName]();
-                    }
+                    OlosAgent[handlerFunctionName]();
                 } else {
                     console.error(`OlosAgent.${handlerFunctionName} não está definida.`);
                 }
@@ -28,43 +29,10 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    function displayCountdownToast() {
-        let countdown = 3;
-
-        const updateToastMessage = () => {
-            M.toast({
-                text: `Fechando em ${countdown} segundos...`,
-                displayLength: 500,
-                classes: 'btn',
-                completeCallback: function () {
-                    if (countdown === 0) {
-                        if (window.opener != null) {
-                            window.close();
-                        } else {
-                            setTimeout(() => {
-                                M.toast({
-                                    text: 'Esta janela não pode ser fechada automaticamente.',
-                                    displayLength: 2000,
-                                    classes: 'btn'
-                                });
-                            }, 3000);
-                        }
-                    }
-                }
-            });
-        };
-
-        const countdownInterval = setInterval(() => {
-            if (countdown >= 0) {
-                updateToastMessage();
-                countdown--;
-            } else {
-                clearInterval(countdownInterval);
-            }
-        }, 1000);
-    }
-
     addButtonEventListener("btnLogout", "agentLogout");
     addButtonEventListener("btnPausa", "agentReasonRequest");
     addButtonEventListener("btnRetornar", "agentIdleRequest");
+    addButtonEventListener("btnHangup", "hangupRequest");
+    addButtonEventListener("btnSendDisposition", "listDispositions");
+    addButtonEventListener("btnListarReasons", "listReasons");
 });

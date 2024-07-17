@@ -12,7 +12,6 @@ namespace OlosAgentSDK
     public partial class OlosAgentAuthenticated : System.Web.UI.Page
     {
         readonly Funcoes funcoes = new Funcoes();
-        string sql = string.Empty;
 
         protected void Page_Load(object sender, EventArgs e)
         {
@@ -34,34 +33,18 @@ namespace OlosAgentSDK
             funcoes.SetSession("idUsuario", Request.QueryString["idUsuario"]);
 
             funcoes.Connection(
-                queryStringParameters.dbServerIp, 
-                queryStringParameters.dbName, 
+                queryStringParameters.dbServerIp,
+                queryStringParameters.dbName,
                 queryStringParameters.dbLogin,
-                queryStringParameters.dbPassword, 
-                null, 
+                queryStringParameters.dbPassword,
+                null,
                 null,
                 queryStringParameters.dbPort);
-
-            if (!IsPostBack)
-            {
-                DropDownList();
-            }
 
             if (!string.IsNullOrEmpty(queryStringParameters.agentLogin) && !string.IsNullOrEmpty(queryStringParameters.agentPassword))
             {
                 funcoes.js($"OlosAgent.authenticatedOlos('{queryStringParameters.agentLogin}', '{queryStringParameters.agentPassword}');", this);
             }
-        }
-
-        protected void DropDownList()
-        {
-            string  ID_DISC_MASTER = funcoes.ValorSQL($@"SELECT	AA.ID_DISC_MASTER
-            FROM	DISC_MASTER AA (NOLOCK)
-            JOIN	DISC_CAD BB (NOLOCK) ON BB.ID_DISCADOR = AA.ID_DISCADOR
-            WHERE	BB.DESCR = 'OLOS API'");
-
-            sql = $@"SELECT ID_DISC_PAUSA, DESCR FROM DISC_PAUSA WHERE ID_DISC_MASTER = {ID_DISC_MASTER}";
-            funcoes.LoadCombo(ddlPausas, sql, "ID_DISC_PAUSA", "DESCR", "Selecione a Pausa: ", false);
         }
 
         [WebMethod]
@@ -72,13 +55,36 @@ namespace OlosAgentSDK
 
         [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        public static string ListDispositions(Dictionary<string, string>[] listDispositions)
+        public static string GetListReasons(Dictionary<string, string>[] reasons)
+        {
+            try
+            {
+                var optionsHtml = "<option value=''>Selecione a Pausa</option>";
+
+                foreach (var reason in reasons)
+                {
+                    string reasonCode = reason["reasonCode"];
+                    string description = reason["description"];
+                    optionsHtml += $"<option value='{reasonCode}'>{description}</option>";
+                }
+
+                return optionsHtml;
+            }
+            catch (Exception ex)
+            {
+                throw new Exception("Erro ao processar ListReasons", ex);
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public static string GetListDispositions(Dictionary<string, string>[] dispositions)
         {
             try
             {
                 var optionsHtml = "<option value=''>Selecione a Disposition</option>";
 
-                foreach (var disposition in listDispositions)
+                foreach (var disposition in dispositions)
                 {
                     string code = disposition["code"];
                     string description = disposition["description"];
@@ -93,31 +99,8 @@ namespace OlosAgentSDK
             }
         }
 
-        //[WebMethod]
-        //[ScriptMethod(ResponseFormat = ResponseFormat.Json)]
-        //public static string ReceberObjetoJsonExemplo(Dictionary<string, string>[] listDispositions)
-        //{
-        //    try
-        //    {
-        //        var optionsHtml = "<option value=''>Selecione</option>";
-
-        //        foreach (var disposition in listDispositions)
-        //        {
-        //            string code = disposition["code"];
-        //            string description = disposition["description"];
-        //            optionsHtml += $"<option value='{code}'>{description}</option>";
-        //        }
-
-        //        return optionsHtml;
-        //    }
-        //    catch (Exception ex)
-        //    {
-        //        throw new Exception("Erro ao processar dispositions", ex);
-        //    }
-        //}
-
         [WebMethod]
-        public static string PauseButtonClicked(string reasonId)
+        public static string GetReasonId(string reasonId)
         {
             return $"Pausa solicitada com o motivo ID: {reasonId}";
         }
@@ -171,8 +154,10 @@ namespace OlosAgentSDK
         }
 
         [WebMethod]
-        public static void ScreenPop(ScreenPop screenPop, Funcoes func)
+        public static void ScreenPop(ScreenPop screenPop)
         {
+            Funcoes func = new Funcoes();
+
             try
             {
                 if (screenPop != null)
@@ -213,7 +198,7 @@ namespace OlosAgentSDK
                                                    ID_LIGACAO       = '{callId}',
                                                    ID_DISC_STATUS   = (SELECT ID_DISC_STATUS FROM DISC_STATUS (NOLOCK) WHERE ID_DISCADOR = {idDiscador} AND DESCR = 'POPUP OLOS API'),
                                                    CPF_CNPJ         = '{customerId}',
-                                                   DDD              = '{phoneNumber.Substring(0, 1)}',
+                                                   DDD              = '{phoneNumber.Substring(0, 2)}',
                                                    TELEFONE         = '{phoneNumber.Substring(2)}',
                                                    DATA_INI         = GETDATE(),
                                                    DATA_FIM         = NULL,
@@ -227,15 +212,6 @@ namespace OlosAgentSDK
             {
                 throw;
             }
-        }
-
-        protected void btnHangup_ServerClick(object sender, EventArgs e)
-        {
-            Funcoes func = new Funcoes();
-
-            funcoes.js($@"OlosAgent.hangupRequest({func.GetSession("callId", "0")})");
-
-            updatePanelHangup.Update();
         }
     }
 }
