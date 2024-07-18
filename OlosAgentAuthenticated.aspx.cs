@@ -1,10 +1,10 @@
-﻿using OlosAgentSDK.Models;
+﻿using static OlosAgentSDK.Models.Olos;
+using OlosAgentSDK.Models;
 using System;
 using System.Collections.Generic;
 using System.Web;
 using System.Web.Script.Services;
 using System.Web.Services;
-using static OlosAgentSDK.Models.Olos;
 
 namespace OlosAgentSDK
 {
@@ -22,15 +22,15 @@ namespace OlosAgentSDK
             {
                 agentLogin = funcoes.COBCRPTO(Request.QueryString["A"]),
                 agentPassword = funcoes.COBCRPTO(Request.QueryString["B"]),
-                idUsuario = funcoes.COBCRPTO(Request.QueryString["C"]),
-                dbServerIp = funcoes.COBCRPTO(Request.QueryString["D"]),
-                dbName = funcoes.COBCRPTO(Request.QueryString["E"]),
-                dbLogin = funcoes.COBCRPTO(Request.QueryString["F"]),
-                dbPassword = funcoes.COBCRPTO(Request.QueryString["G"]),
-                dbPort = funcoes.COBCRPTO(Request.QueryString["H"])
+                dbServerIp = funcoes.COBCRPTO(Request.QueryString["C"]),
+                dbName = funcoes.COBCRPTO(Request.QueryString["D"]),
+                dbLogin = funcoes.COBCRPTO(Request.QueryString["E"]),
+                dbPassword = funcoes.COBCRPTO(Request.QueryString["F"]),
+                dbPort = funcoes.COBCRPTO(Request.QueryString["G"]),
+                idUsuario = funcoes.COBCRPTO(Request.QueryString["H"]),
             };
 
-            funcoes.SetSession("idUsuario", Request.QueryString["C"]);
+            funcoes.SetSession("idUsuario", Request.QueryString["H"]);
 
             funcoes.Connection(
                 queryStringParameters.dbServerIp,

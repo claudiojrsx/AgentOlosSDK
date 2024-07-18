@@ -115,7 +115,6 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="ApiHandler.aspx" />
     <Content Include="OlosAgentAuthenticated.aspx" />
     <Content Include="public\css\materialize-1.0.0\materialize.min.css" />
     <Content Include="public\css\materialize\materialize.css" />
@@ -147,16 +146,9 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ApiHandler.aspx.cs">
-      <DependentUpon>ApiHandler.aspx</DependentUpon>
-      <SubType>ASPXCodeBehind</SubType>
-    </Compile>
-    <Compile Include="ApiHandler.aspx.designer.cs">
-      <DependentUpon>ApiHandler.aspx</DependentUpon>
-    </Compile>
     <Compile Include="Config\Funcoes.cs" />
+    <Compile Include="Config\MD5Encrypt.cs" />
     <Compile Include="Models\Olos.cs" />
-    <Compile Include="Models\ParameterHandler.cs" />
     <Compile Include="Models\QueryStrings.cs" />
     <Compile Include="OlosAgentAuthenticated.aspx.cs">
       <DependentUpon>OlosAgentAuthenticated.aspx</DependentUpon>

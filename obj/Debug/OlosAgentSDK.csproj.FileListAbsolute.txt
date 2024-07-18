@@ -1,5 +1,3 @@
-C:\Users\Claudio\Desktop\OlosAgentSDK\obj\Debug\OlosAgentSDK.csproj.AssemblyReference.cache
-C:\Users\Claudio\Desktop\OlosAgentSDK\obj\Debug\OlosAgentSDK.csproj.CoreCompileInputs.cache
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\OlosAgentSDK.dll.config
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\OlosAgentSDK.dll
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\OlosAgentSDK.pdb
@@ -61,6 +59,8 @@ C:\Users\Claudio\Desktop\OlosAgentSDK\bin\System.Runtime.CompilerServices.Unsafe
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\System.Web.Http.xml
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\System.Web.Http.Cors.xml
+C:\Users\Claudio\Desktop\OlosAgentSDK\obj\Debug\OlosAgentSDK.csproj.AssemblyReference.cache
+C:\Users\Claudio\Desktop\OlosAgentSDK\obj\Debug\OlosAgentSDK.csproj.CoreCompileInputs.cache
 C:\Users\Claudio\Desktop\OlosAgentSDK\obj\Debug\OlosAgen.948E41E6.Up2Date
 C:\Users\Claudio\Desktop\OlosAgentSDK\obj\Debug\OlosAgentSDK.dll
 C:\Users\Claudio\Desktop\OlosAgentSDK\obj\Debug\OlosAgentSDK.pdb

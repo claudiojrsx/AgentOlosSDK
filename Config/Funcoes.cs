@@ -522,6 +522,46 @@ namespace OlosAgentSDK
             return Result;
         }
 
+        public String COBCRPTO(String pSenha, bool pCRIPTOGRAFA)
+        {
+            String[] Simbolos = new String[4];
+            String sValor;
+            String Result = String.Empty;
+
+            int i;
+
+            Simbolos[0] = "ABCDEFGHIJLMNOPQRSTUVXZYWK ~!@#$%^&*()";
+            Simbolos[1] = "5Üø£ÂÀ©Øû×Æôöò»ƒçêùÿÙýÄÅÉúñÑªº¿®¬¼ëèïæÁ";
+            Simbolos[2] = "abcdefghijlmnopqrstuvxzywk1234567890";
+            Simbolos[3] = "Çüé¾¶§áâäàþîì¡åíó÷¸°¨·¹ÎÏ-+ÌÓß³²Õµ«½";
+
+            for (i = 0; i < pSenha.Length; i++)
+            {
+                sValor = pSenha[i].ToString();
+
+                for (int x = 0; x < Simbolos.Length; x++)
+                    if ((Simbolos[x].IndexOf(sValor) >= 0) && ((NumeroPar(x) && pCRIPTOGRAFA) || (NumeroImpar(x) && !pCRIPTOGRAFA)))
+                    {
+                        sValor = Simbolos[(NumeroPar(x) ? (x + 1) : (x - 1))][Simbolos[x].IndexOf(sValor)].ToString();
+                        break;
+                    }
+
+                Result = Result + sValor;
+            }
+            return Result;
+        }
+
+        public bool NumeroImpar(int numero)
+        {
+            return IsOdd(numero);
+        }
+
+        public bool IsOdd(int numero)
+        {
+            decimal dividido = (decimal)numero / (decimal)2;
+            return (dividido != Math.Round(dividido));
+        }
+
         public bool NumeroPar(int numero)
         {
             return IsEven(numero);

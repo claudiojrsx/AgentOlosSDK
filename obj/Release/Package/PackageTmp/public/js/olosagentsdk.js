@@ -8616,8 +8616,10 @@
 							console.log('Request success: ', response.d);
 							OlosAgent.agentReasonRequest(reasonId);
 							console.log(`Pausa enviada com sucesso: ${reasonId}`);
+							showSnackbar(`Pausa enviada com sucesso: ${reasonId}`);
 						} else {
 							console.error('Request failed: ', response);
+							showSnackBar('Request failed: ', response);
 						}
 					},
 					error: function (error) {
@@ -8654,8 +8656,10 @@
 							console.log("Disposition Code: ", response.d);
 							OlosAgent.hangupAndDispositionCallByCode(dispositionCode);
 							console.log(`Disposition Code enviado com sucesso: ${dispositionCode}.`);
+							showSnackbar(`Disposition Code enviado com sucesso: ${dispositionCode}.`);
 						} else {
 							console.error("Request failed: ", response);
+							showSnackbar("Request failed: ", response);
 						}
 					},
 					error: function (error) {
@@ -8707,8 +8711,10 @@
 				agentWS.manualCallStateRequest();
 				agentWS.sendManualCallRequest(ddd, phoneNumber, campaignId);
 				console.log('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
+				showSnackBar('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
 			} else {
 				console.error('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
+				showSnackbar('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
 			}
 		}
 
@@ -8847,6 +8853,7 @@
 		function agentReasonRequest(reasonId) {
 			agentWS.agentReasonRequest(reasonId, (reasonId) => {
 				console.log(`Agent request pause: ${reasonId}`);
+				showSnackbar(`Pausa solicitada com sucesso: ${reasonId}`);
 			});
 		}
 
@@ -8880,11 +8887,13 @@
 			if (globalCallId) {
 				agentWS.hangupRequest(globalCallId, (callId) => {
 					console.log(`Ligação finalizada com sucesso: ${callId}`);
+					showSnackbar(`Ligação finalizada com sucesso!`);
 
 					globalCallId = null;
 				});
 			} else {
 				console.error('Nenhum callId armazenado para finalizar a ligação');
+				showSnackbar(`Nenhum callId armazenado para finalizar a ligação`);
 			}
 		}
 
