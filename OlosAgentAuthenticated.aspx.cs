@@ -20,17 +20,17 @@ namespace OlosAgentSDK
 
             QueryStrings.QueryStringParameters queryStringParameters = new QueryStrings.QueryStringParameters
             {
-                agentLogin = Request.QueryString["agentLogin"],
-                agentPassword = Request.QueryString["agentPassword"],
-                idUsuario = Request.QueryString["idUsuario"],
-                dbServerIp = Request.QueryString["dbServerIp"],
-                dbName = Request.QueryString["dbName"],
-                dbLogin = Request.QueryString["dbLogin"],
-                dbPassword = Request.QueryString["dbPassword"],
-                dbPort = Request.QueryString["dbPort"]
+                agentLogin = funcoes.COBCRPTO(Request.QueryString["A"]),
+                agentPassword = funcoes.COBCRPTO(Request.QueryString["B"]),
+                idUsuario = funcoes.COBCRPTO(Request.QueryString["C"]),
+                dbServerIp = funcoes.COBCRPTO(Request.QueryString["D"]),
+                dbName = funcoes.COBCRPTO(Request.QueryString["E"]),
+                dbLogin = funcoes.COBCRPTO(Request.QueryString["F"]),
+                dbPassword = funcoes.COBCRPTO(Request.QueryString["G"]),
+                dbPort = funcoes.COBCRPTO(Request.QueryString["H"])
             };
 
-            funcoes.SetSession("idUsuario", Request.QueryString["idUsuario"]);
+            funcoes.SetSession("idUsuario", Request.QueryString["C"]);
 
             funcoes.Connection(
                 queryStringParameters.dbServerIp,

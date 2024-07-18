@@ -5,7 +5,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
 <Project>
   <PropertyGroup>
     <_PublishTargetUrl>C:\OlosAgentSDK</_PublishTargetUrl>
-    <History>True|2024-07-12T21:02:36.4300186Z||;True|2024-07-11T17:33:25.8666980-03:00||;True|2024-07-08T18:07:09.0959157-03:00||;True|2024-07-04T12:19:47.1477809-03:00||;True|2024-07-04T10:12:34.1701474-03:00||;True|2024-07-04T10:09:49.4658870-03:00||;True|2024-07-03T17:40:23.6311376-03:00||;True|2024-07-03T10:35:39.2449652-03:00||;True|2024-07-01T17:55:26.5205163-03:00||;True|2024-07-01T17:53:11.0263695-03:00||;</History>
+    <History>True|2024-07-17T20:20:50.1410080Z||;True|2024-07-12T18:02:36.4300186-03:00||;True|2024-07-11T17:33:25.8666980-03:00||;True|2024-07-08T18:07:09.0959157-03:00||;True|2024-07-04T12:19:47.1477809-03:00||;True|2024-07-04T10:12:34.1701474-03:00||;True|2024-07-04T10:09:49.4658870-03:00||;True|2024-07-03T17:40:23.6311376-03:00||;True|2024-07-03T10:35:39.2449652-03:00||;True|2024-07-01T17:55:26.5205163-03:00||;True|2024-07-01T17:53:11.0263695-03:00||;</History>
     <LastFailureDetails />
   </PropertyGroup>
   <ItemGroup>
@@ -22,19 +22,19 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>04/05/2017 02:25:40</publishTime>
     </File>
     <File Include="bin/Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll">
-      <publishTime>05/09/2018 16:10:50</publishTime>
+      <publishTime>09/05/2018 16:10:50</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Cors.dll">
-      <publishTime>10/05/2022 20:31:24</publishTime>
+      <publishTime>05/10/2022 20:31:24</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.dll">
-      <publishTime>10/05/2022 23:31:20</publishTime>
+      <publishTime>05/10/2022 23:31:20</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Host.SystemWeb.dll">
-      <publishTime>10/05/2022 23:31:40</publishTime>
+      <publishTime>05/10/2022 23:31:40</publishTime>
     </File>
     <File Include="bin/Microsoft.Owin.Security.dll">
-      <publishTime>10/05/2022 23:31:38</publishTime>
+      <publishTime>05/10/2022 23:31:38</publishTime>
     </File>
     <File Include="bin/Microsoft.Web.Infrastructure.dll">
       <publishTime>05/27/2022 23:39:10</publishTime>
@@ -46,13 +46,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>11/27/2018 21:07:54</publishTime>
     </File>
     <File Include="bin/Newtonsoft.Json.dll">
-      <publishTime>08/03/2023 07:09:56</publishTime>
+      <publishTime>03/08/2023 07:09:56</publishTime>
     </File>
     <File Include="bin/OlosAgentSDK.dll">
-      <publishTime>07/12/2024 18:02:34</publishTime>
+      <publishTime>07/17/2024 17:20:48</publishTime>
     </File>
     <File Include="bin/OlosAgentSDK.pdb">
-      <publishTime>07/12/2024 18:02:34</publishTime>
+      <publishTime>07/17/2024 17:20:48</publishTime>
     </File>
     <File Include="bin/Owin.dll">
       <publishTime>11/13/2012 13:19:34</publishTime>
@@ -139,7 +139,7 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>02/19/2020 07:05:18</publishTime>
     </File>
     <File Include="bin/System.Memory.dll">
-      <publishTime>08/05/2022 00:31:02</publishTime>
+      <publishTime>05/08/2022 00:31:02</publishTime>
     </File>
     <File Include="bin/System.Net.Http.Formatting.dll">
       <publishTime>10/20/2023 17:33:52</publishTime>
@@ -160,13 +160,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>10/20/2023 17:34:06</publishTime>
     </File>
     <File Include="OlosAgentAuthenticated.aspx">
-      <publishTime>07/12/2024 17:52:12</publishTime>
+      <publishTime>07/17/2024 15:48:39</publishTime>
     </File>
     <File Include="OlosAgentSDK.aspx">
       <publishTime>03/07/2024 10:33:29</publishTime>
     </File>
     <File Include="public/css/materialize-1.0.0/materialize.min.css">
-      <publishTime>03/07/2024 11:51:34</publishTime>
+      <publishTime>07/03/2024 11:51:34</publishTime>
     </File>
     <File Include="public/css/materialize/materialize.css">
       <publishTime>06/13/2024 19:42:36</publishTime>
@@ -175,16 +175,16 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/13/2024 19:42:36</publishTime>
     </File>
     <File Include="public/css/styles.css">
-      <publishTime>07/12/2024 17:51:02</publishTime>
+      <publishTime>07/17/2024 10:34:26</publishTime>
     </File>
     <File Include="public/favicon.png">
       <publishTime>04/19/2024 12:13:10</publishTime>
     </File>
     <File Include="public/js/handlers.js">
-      <publishTime>07/12/2024 14:15:01</publishTime>
+      <publishTime>07/17/2024 15:49:51</publishTime>
     </File>
     <File Include="public/js/materialize-1.0.0/materialize.min.js">
-      <publishTime>03/07/2024 11:53:22</publishTime>
+      <publishTime>07/03/2024 11:53:22</publishTime>
     </File>
     <File Include="public/js/materialize/materialize.js">
       <publishTime>06/13/2024 19:42:36</publishTime>
@@ -196,7 +196,13 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>06/13/2024 19:42:36</publishTime>
     </File>
     <File Include="public/js/olosagentsdk.js">
-      <publishTime>07/12/2024 17:56:13</publishTime>
+      <publishTime>07/17/2024 17:15:47</publishTime>
+    </File>
+    <File Include="public/material-design-snackbar/mdc.snackbar.min.css">
+      <publishTime>07/17/2024 14:41:19</publishTime>
+    </File>
+    <File Include="public/material-design-snackbar/mdc.snackbar.min.js">
+      <publishTime>07/17/2024 14:40:31</publishTime>
     </File>
     <File Include="public/material-design/js/material-components-web.js">
       <publishTime>07/10/2024 11:28:16</publishTime>
@@ -226,25 +232,25 @@ https://go.microsoft.com/fwlink/?LinkID=208121.
       <publishTime>07/05/2024 08:14:05</publishTime>
     </File>
     <File Include="public/material-design/material-icons.css">
-      <publishTime>05/07/2024 08:14:27</publishTime>
+      <publishTime>07/05/2024 08:14:27</publishTime>
     </File>
     <File Include="Scripts/jquery-3.7.1.js">
-      <publishTime>02/07/2024 10:06:26</publishTime>
+      <publishTime>07/02/2024 10:06:26</publishTime>
     </File>
     <File Include="Scripts/jquery-3.7.1.min.js">
-      <publishTime>02/07/2024 10:06:26</publishTime>
+      <publishTime>07/02/2024 10:06:26</publishTime>
     </File>
     <File Include="Scripts/jquery-3.7.1.min.map">
-      <publishTime>02/07/2024 10:06:26</publishTime>
+      <publishTime>07/02/2024 10:06:26</publishTime>
     </File>
     <File Include="Scripts/jquery-3.7.1.slim.js">
-      <publishTime>02/07/2024 10:06:26</publishTime>
+      <publishTime>07/02/2024 10:06:26</publishTime>
     </File>
     <File Include="Scripts/jquery-3.7.1.slim.min.js">
-      <publishTime>02/07/2024 10:06:25</publishTime>
+      <publishTime>07/02/2024 10:06:25</publishTime>
     </File>
     <File Include="Scripts/jquery-3.7.1.slim.min.map">
-      <publishTime>02/07/2024 10:06:25</publishTime>
+      <publishTime>07/02/2024 10:06:25</publishTime>
     </File>
     <File Include="Scripts/jquery.signalR-2.2.2.js">
       <publishTime>02/07/2024 10:07:17</publishTime>

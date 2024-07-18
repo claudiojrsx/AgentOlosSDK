@@ -8550,7 +8550,7 @@
 
 				olosagentsdk_umd.exports.olosOn("LoginCampaign", (payload) => {
 					console.log("Evento LoginCampaign ouvido:", payload);
-					callGetCampaignId(payload);
+					GetCampaignId(payload);
 				});
 
 				olosagentsdk_umd.exports.olosOn("Screenpop", (payload) => {
@@ -8561,13 +8561,15 @@
 			});
 		}
 
-		var campaignIdGlobal = null;
-		var campaignIdReceptivaGlobal = null;
+		var globalCampaignIdAtiva = null;
+		var globalCampaignIdReceptiva = null;
 		var dddGlobal = null;
 		var phoneNumberGlobal = null;
+		var globalCallId = null;
+		var globalCampaignId = null;
 
 		$(document).ready(function () {
-			$('#btnCallRequest').prop('disabled', true);
+			$('#btnCallRequest').prop('disabled');
 
 			$('#btnCallRequest').click(function () {
 				dddGlobal = $('#inputDdd').val();
@@ -8576,8 +8578,8 @@
 				console.log("Inputed ddd: ", dddGlobal);
 				console.log("Inputed phoneNumber: ", phoneNumberGlobal);
 
-				if (campaignIdGlobal) {
-					sendManualCallRequest(dddGlobal, phoneNumberGlobal, campaignIdGlobal);
+				if (globalCampaignIdAtiva) {
+					sendManualCallRequest(dddGlobal, phoneNumberGlobal, globalCampaignIdAtiva);
 				} else {
 					console.error('CampaignId não disponível. Certifique-se de que callGetCampaignId foi chamado e completado com sucesso.');
 				}
@@ -8585,65 +8587,61 @@
 		});
 
 		$(document).ready(function () {
-			var disposicoesCarregadas = false;
+			$('#btnPausa').prop('disabled', true);
+			$('#btnRetornar').prop('disabled', true);
 
-			$('#btnLancarTabulacao').addClass('disabled');
-
-			var checkCampaignIdInterval = setInterval(function () {
-				if (campaignIdReceptivaGlobal) {
-					$('#btnLancarTabulacao').removeClass('disabled');
-					clearInterval(checkCampaignIdInterval);
-				}
-			}, 1000);
-
-			$('#btnListarDispositions').click(function () {
-				if (!$(this).hasClass('disabled')) {
-					if (!disposicoesCarregadas && campaignIdReceptivaGlobal) {
-						listDispositions(campaignIdReceptivaGlobal);
-						disposicoesCarregadas = true;
-					} else {
-						console.error('CampaignId não disponível. Certifique-se de que listDispositions foi chamado e completado com sucesso.');
-					}
-				}
-			});
-		});
-
-		$(document).ready(function () {
 			$('#ddlPausas').change(function () {
 				var reasonId = $(this).val();
 				console.log("Selected reasonId: ", reasonId);
+
+				if (reasonId) {
+					$('#btnPausa').prop('disabled', false);
+					$('#btnRetornar').prop('disabled', false);
+				} else {
+					$('#btnPausa').prop('disabled', true);
+					$('#btnRetornar').prop('disabled', true);
+				}
 			});
 
 			$('#btnPausa').click(function () {
 				var reasonId = $('#ddlPausas').val();
 				$.ajax({
-					type: "POST",
-					url: "/OlosAgentAuthenticated.aspx/PauseButtonClicked",
+					type: 'POST',
+					url: '/OlosAgentAuthenticated.aspx/GetReasonId',
 					data: JSON.stringify({ reasonId: reasonId }),
-					contentType: "application/json; charset=utf-8",
-					dataType: "json",
+					contentType: 'application/json; charset=utf-8',
+					dataType: 'json',
 					success: function (response) {
 						if (response.d) {
-							console.log("Request success: ", response.d);
+							console.log('Request success: ', response.d);
 							OlosAgent.agentReasonRequest(reasonId);
+							console.log(`Pausa enviada com sucesso: ${reasonId}`);
 						} else {
-							console.error("Request failed: ", response);
+							console.error('Request failed: ', response);
 						}
 					},
 					error: function (error) {
-						console.error("Request failed: ", error);
+						console.error('Request failed: ', error);
 					}
 				});
 			});
 		});
 
 		$(document).ready(function () {
+			$('#btnThrowDisposition').prop('disabled', true);
+
 			$('#ddlDispositions').change(function () {
 				var dispositionCode = $(this).val();
 				console.log("Selected dispositionCode: ", dispositionCode);
+
+				if (dispositionCode) {
+					$('#btnThrowDisposition').prop('disabled', false);
+				} else {
+					$('#btnThrowDisposition').prop('disabled', true);
+				}
 			});
 
-			$('#btnLancarTabulacao').click(function () {
+			$('#btnThrowDisposition').click(function () {
 				var dispositionCode = $('#ddlDispositions').val();
 				$.ajax({
 					type: "POST",
@@ -8653,8 +8651,9 @@
 					dataType: "json",
 					success: function (response) {
 						if (response.d) {
-							console.log("Request success: ", response.d);
+							console.log("Disposition Code: ", response.d);
 							OlosAgent.hangupAndDispositionCallByCode(dispositionCode);
+							console.log(`Disposition Code enviado com sucesso: ${dispositionCode}.`);
 						} else {
 							console.error("Request failed: ", response);
 						}
@@ -8666,24 +8665,24 @@
 			});
 		});
 
-		function callGetCampaignId(logincampaign) {
-			$.ajax({
-				url: '/OlosAgentAuthenticated.aspx/GetCampaignId',
-				type: 'POST',
-				contentType: 'application/json; charset=utf-8',
-				data: JSON.stringify({ loginCampaign: logincampaign }),
-				dataType: 'json',
-				success: function (response) {
-					campaignIdGlobal = response.d;
-					console.log('CampaignId: ', campaignIdGlobal);
-					$('#campaignIdAtiva').text('CampaignId: ' + campaignIdGlobal);
-					$('#btnCallRequest').prop('disabled', false);
-				},
-				error: function (error) {
-					console.error('Erro ao processar evento no servidor:', error);
-				}
-			});
-		}
+        function GetCampaignId(logincampaign) {
+            $.ajax({
+                url: '/OlosAgentAuthenticated.aspx/GetCampaignId',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ loginCampaign: logincampaign }),
+                dataType: 'json',
+                success: function (response) {
+                    globalCampaignIdAtiva = response.d;
+                    console.log('CampaignId: ', globalCampaignIdAtiva);
+                    $('#campaignIdAtiva').text('Campanha Ativa: ' + globalCampaignIdAtiva);
+                    $('#btnCallRequest').prop('disabled', false);
+                },
+                error: function (error) {
+                    console.error('Erro ao processar evento no servidor:', error);
+                }
+            });
+        }
 
 		function GetReceptivaCampaignId(screenPop) {
 			$.ajax({
@@ -8693,9 +8692,9 @@
 				data: JSON.stringify({ screenPop: screenPop }),
 				dataType: 'json',
 				success: function (response) {
-					campaignIdGlobal = response.d;
-					console.log('CampaignId: ', campaignIdGlobal);
-					$('#campaignIdReceptiva').text('CampaignId: ' + campaignIdGlobal);
+					globalCampaignIdReceptiva = response.d;
+					console.log('CampaignId: ', globalCampaignIdReceptiva);
+					$('#campaignIdReceptiva').text('Campanha Receptiva: ' + globalCampaignIdReceptiva);
 				},
 				error: function (error) {
 					console.error('Erro ao processar evento no servidor:', error);
@@ -8712,25 +8711,6 @@
 				console.error('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
 			}
 		}
-
-        function sendDispositionsToBackend(dispositions) {
-            $.ajax({
-                url: '/OlosAgentAuthenticated.aspx/ListDispositions',
-                type: 'POST',
-                contentType: 'application/json; charset=utf-8',
-				data: JSON.stringify({ listDispositions: dispositions }),
-                dataType: 'json',
-				success: function (response) {
-					$("#ddlDispositions").html(response.d);
-                    console.log('Disposições salvas com sucesso no back-end', response);
-                },
-                error: function (xhr, status, error) {
-                    console.error('Erro ao salvar disposições no back-end: ', error);
-                    console.error('Status: ', status);
-                    console.error('Response Text: ', xhr.responseText);
-                }
-            });
-        }
 
 		function callAgentIdWebMethod(agentId) {
             $.ajax({
@@ -8782,20 +8762,88 @@
 
         function callScreenPop(screenPop) {
             $.ajax({
-				url: '/OlosAgentAuthenticated.aspx/ScreenPop',
+                url: '/OlosAgentAuthenticated.aspx/ScreenPop',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
-				data: JSON.stringify({ screenPop: screenPop }),
+                data: JSON.stringify({ screenPop: screenPop }),
                 dataType: 'json',
                 success: function (response) {
-					console.log('Evento processado com sucesso no servidor:', response);
+                    console.log('Evento processado com sucesso no servidor:', response);
+
+                    if (screenPop && screenPop.callId && screenPop.campaignId) {
+                        globalCallId = screenPop.callId;
+                        globalCampaignId = screenPop.campaignId;
+                        console.log('callId armazenado:', globalCallId);
+                        console.log('campaignId armazenado:', globalCampaignId);
+                    } else {
+                        console.error('callId não encontrado no objeto screenPop');
+                    }
                 },
                 error: function (error) {
                     console.error('Erro ao processar evento no servidor:', error);
                 }
             });
+		}
+
+		/*Enviando ListReasons*/
+		function listReasons() {
+			agentWS.listReasons((listReasons) => {
+				if (listReasons) {
+					console.log(listReasons);
+					sendListReasons(listReasons);
+				} else {
+					console.log("Nenhum motivo encontrado.");
+				}
+			});
+		}
+
+        function sendListReasons(reasons) {
+            $.ajax({
+                url: '/OlosAgentAuthenticated.aspx/GetListReasons',
+                type: 'POST',
+                contentType: 'application/json; charset=utf-8',
+                data: JSON.stringify({ reasons: reasons }),
+                dataType: 'json',
+                success: function (response) {
+                    $('#ddlPausas').html(response.d);
+                    console.log('Pausas carregadas com sucesso', response);
+                },
+                error: function (xhr, status, error) {
+                    console.error('Erro ao carregar as pausas: ', error);
+                    console.error('Status: ', status);
+                    console.error('Response Text: ', xhr.responseText);
+                }
+            });
         }
 
+		/*Ouvindo evento ListDispositions*/
+		$(document).ready(function () {
+			olosagentsdk_umd.exports.olosOn("ListDispositions", (result) => {
+				console.log("Evento ListDispositions ouvido:", result);
+				sendListDispositions(result);
+			});
+
+			function sendListDispositions(dispositions) {
+				$.ajax({
+					url: '/OlosAgentAuthenticated.aspx/GetListDispositions',
+					type: 'POST',
+					contentType: 'application/json; charset=utf-8',
+					data: JSON.stringify({ dispositions: dispositions }),
+					dataType: 'json',
+					success: function (response) {
+						$('#ddlDispositions').html(response.d);
+						console.log('Disposições carregadas com sucesso', response);
+					},
+					error: function (xhr, status, error) {
+						console.error('Erro ao carregar disposições: ', error);
+						console.error('Status: ', status);
+						console.error('Response Text: ', xhr.responseText);
+					}
+				});
+			}
+		});
+
+		/* Funções */
 		function agentReasonRequest(reasonId) {
 			agentWS.agentReasonRequest(reasonId, (reasonId) => {
 				console.log(`Agent request pause: ${reasonId}`);
@@ -8812,40 +8860,32 @@
 			agentWS.agentIdleRequest();
 		}
 
-		function listReasons() {
-			const handleListReasons = (listReasons) => {
-				console.log("Lista de pausas:", listReasons);
-
-				listReasons.forEach((reason) => {
-					console.log("Motivo de pausa:", reason);
+		function listDispositions() {
+			if (globalCampaignId) {
+				agentWS.listDispositions(globalCampaignId, (result) => {
+					console.log(`Lista de dispositions: ${result}`);
+					globalCampaignId = null;
 				});
-			};
-
-			agentWS.listReasons(handleListReasons);
+			} else {
+				console.error('Nenhum campaignId armazenado para listar as dispositions');
+				showSnackbar('Nenhum campaignId armazenado para listar as dispositions');
+			}
 		}
-
-        function listDispositions(campaignId) {
-            try {
-                agentWS.listDispositions(campaignId, (result) => { });
-            } catch (error) {
-                console.error(error.message);
-                throw error;
-            }
-        }
-
-		olosagentsdk_umd.exports.olosOn("ListDispositions", (result) => {
-			console.log("Evento ListDispositions ouvido:", result);
-			sendDispositionsToBackend(result);
-		});
 
 		function agentLogout() {
 			agentWS.agentLogout();
 		}
 
-		function hangupRequest(callId) {
-			agentWS.hangupRequest(callId, (callId) => {
-				console.log(`Ligação finalizada com sucesso: ${callId}`);
-			});
+		function hangupRequest() {
+			if (globalCallId) {
+				agentWS.hangupRequest(globalCallId, (callId) => {
+					console.log(`Ligação finalizada com sucesso: ${callId}`);
+
+					globalCallId = null;
+				});
+			} else {
+				console.error('Nenhum callId armazenado para finalizar a ligação');
+			}
 		}
 
 		return {
