@@ -147,9 +147,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Config\Funcoes.cs" />
-    <Compile Include="Config\MD5Encrypt.cs" />
     <Compile Include="Models\Olos.cs" />
-    <Compile Include="Models\QueryStrings.cs" />
     <Compile Include="OlosAgentAuthenticated.aspx.cs">
       <DependentUpon>OlosAgentAuthenticated.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

@@ -1,5 +1,5 @@
 ﻿using static OlosAgentSDK.Models.Olos;
-using OlosAgentSDK.Models;
+
 using System;
 using System.Collections.Generic;
 using System.Web;
@@ -11,39 +11,53 @@ namespace OlosAgentSDK
     [ScriptService]
     public partial class OlosAgentAuthenticated : System.Web.UI.Page
     {
-        readonly Funcoes funcoes = new Funcoes();
+        private static readonly Funcoes funcoes = new Funcoes();
 
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
 
-            QueryStrings.QueryStringParameters queryStringParameters = new QueryStrings.QueryStringParameters
+            try
             {
-                agentLogin = funcoes.COBCRPTO(Request.QueryString["A"]),
-                agentPassword = funcoes.COBCRPTO(Request.QueryString["B"]),
-                dbServerIp = funcoes.COBCRPTO(Request.QueryString["C"]),
-                dbName = funcoes.COBCRPTO(Request.QueryString["D"]),
-                dbLogin = funcoes.COBCRPTO(Request.QueryString["E"]),
-                dbPassword = funcoes.COBCRPTO(Request.QueryString["F"]),
-                dbPort = funcoes.COBCRPTO(Request.QueryString["G"]),
-                idUsuario = funcoes.COBCRPTO(Request.QueryString["H"]),
-            };
+                string agentLogin = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["A"])).Replace("ñ", "1");
+                string agentPassword = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["B"])).Replace("ñ", "1");
+                string dbServerIp = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["C"])).Replace("ñ", "1");
+                string dbName = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["D"])).Replace("ñ", "1");
+                string dbLogin = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["E"])).Replace("ñ", "1");
+                string dbPassword = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["F"])).Replace("ñ", "1");
+                string dbPort = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["G"])).Replace("ñ", "1");
+                string idUsuario = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["H"])).Replace("ñ", "1");
 
-            funcoes.SetSession("idUsuario", Request.QueryString["H"]);
+                // Logs de depuração
+                Console.WriteLine($"agentLogin: {agentLogin}");
+                Console.WriteLine($"agentPassword: {agentPassword}");
+                Console.WriteLine($"dbServerIp: {dbServerIp}");
+                Console.WriteLine($"dbName: {dbName}");
+                Console.WriteLine($"dbLogin: {dbLogin}");
+                Console.WriteLine($"dbPassword: {dbPassword}");
+                Console.WriteLine($"dbPort: {dbPort}");
+                Console.WriteLine($"idUsuario: {idUsuario}");
 
-            funcoes.Connection(
-                queryStringParameters.dbServerIp,
-                queryStringParameters.dbName,
-                queryStringParameters.dbLogin,
-                queryStringParameters.dbPassword,
-                null,
-                null,
-                queryStringParameters.dbPort);
+                funcoes.SetSession("idUsuario", idUsuario);
 
-            if (!string.IsNullOrEmpty(queryStringParameters.agentLogin) && !string.IsNullOrEmpty(queryStringParameters.agentPassword))
+                funcoes.Connection(
+                    dbServerIp,
+                    dbName,
+                    dbLogin,
+                    dbPassword,
+                    null,
+                    null,
+                    dbPort);
+
+                if (!string.IsNullOrEmpty(agentLogin) && !string.IsNullOrEmpty(agentPassword))
+                {
+                    funcoes.js($"OlosAgent.authenticatedOlos('{agentLogin}', '{agentPassword}');", this);
+                }
+            }
+            catch (Exception ex)
             {
-                funcoes.js($"OlosAgent.authenticatedOlos('{queryStringParameters.agentLogin}', '{queryStringParameters.agentPassword}');", this);
+                Response.Write($"Error: {ex.Message}");
             }
         }
 
@@ -165,18 +179,12 @@ namespace OlosAgentSDK
                     int callId = screenPop.callId;
                     int campaignId = screenPop.campaignId;
                     string phoneNumber = screenPop.phoneNumber;
-                    string campaignData = screenPop.campaignData;
                     string customerId = screenPop.customerId;
-                    int agentIdOrigin = screenPop.agentIdOrigin;
-                    int campaignIdOrigin = screenPop.campaignIdOrigin;
-                    bool readOnly = screenPop.readOnly;
-                    string campaignCode = screenPop.campaignCode;
-                    string tableName = screenPop.tableName;
-                    bool priorityCampaign = screenPop.priorityCampaign;
-                    object phoneNumberList = screenPop.phoneNumberList;
-                    bool previewCall = screenPop.previewCall;
-                    bool automaticPreviewCall = screenPop.automaticPreviewCall;
-                    string channel = screenPop.channel;
+
+                    func.SetSession("callId", callId);
+                    func.SetSession("customerId", customerId);
+                    func.SetSession("phoneNumberDDD", phoneNumber.Substring(0, 2));
+                    func.SetSession("phoneNumber", phoneNumber.Substring(2));
 
                     string idDiscador = func.ValorSQL($@"SELECT TOP 1 DC.ID_DISCADOR FROM DISC_CAD DC (NOLOCK) WHERE DC.DESCR = 'OLOS API'");
 
@@ -211,6 +219,29 @@ namespace OlosAgentSDK
             catch (Exception)
             {
                 throw;
+            }
+        }
+
+        [WebMethod]
+        [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
+        public static string CheckScreenPop()
+        {
+            Funcoes func = new Funcoes();
+            try
+            {
+                string query = func.ValorSQL($@"
+                SELECT COD_FIM
+                FROM POPUPcob (NOLOCK) 
+                WHERE ID_LIGACAO = '{func.GetSession("callId", "0")}'
+                AND CPF_CNPJ = '{func.GetSession("customerId", "0")}'
+                AND DDD = '{func.GetSession("phoneNumberDDD", "0")}'
+                AND TELEFONE = '{func.GetSession("phoneNumber", "0")}'
+                AND COD_FIM IS NOT NULL");
+                return query;
+            }
+            catch
+            {
+                return null;
             }
         }
     }

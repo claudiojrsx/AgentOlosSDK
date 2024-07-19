@@ -10,7 +10,7 @@ function showSnackbar(message) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-    function addButtonEventListener(buttonId, handlerFunctionName) {
+    function addButtonEventListener(buttonId, handlerFunctionName, callback) {
         const button = document.getElementById(buttonId);
         if (button) {
             button.addEventListener("click", (event) => {
@@ -20,6 +20,9 @@ document.addEventListener("DOMContentLoaded", () => {
                     typeof OlosAgent[handlerFunctionName] === "function"
                 ) {
                     OlosAgent[handlerFunctionName]();
+                    if (callback) {
+                        callback();
+                    }
                 } else {
                     console.error(`OlosAgent.${handlerFunctionName} não está definida.`);
                 }
@@ -29,7 +32,12 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     }
 
-    addButtonEventListener("btnLogout", "agentLogout");
+    addButtonEventListener("btnLogout", "agentLogout", () => {
+        showSnackbar("Logout realizado com sucesso. A janela será fechada em 3 segundos.");
+        setTimeout(() => {
+            window.close();
+        }, 3000);
+    });
     addButtonEventListener("btnPausa", "agentReasonRequest");
     addButtonEventListener("btnRetornar", "agentIdleRequest");
     addButtonEventListener("btnHangup", "hangupRequest");

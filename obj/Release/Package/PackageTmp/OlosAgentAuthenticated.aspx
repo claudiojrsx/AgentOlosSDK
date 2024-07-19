@@ -159,7 +159,7 @@
             </div>
             <div id="snackbar" class="mdc-snackbar">
                 <div class="mdc-snackbar__surface">
-                    <div class="mdc-snackbar__label" role="status" aria-live="polite"></div>
+                    <div class="mdc-snackbar__label snackbar-font" role="status" aria-live="polite"></div>
                 </div>
             </div>
         </section>

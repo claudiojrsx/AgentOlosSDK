@@ -3,16 +3,24 @@
   "WorkspaceRootPath": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\olosagentauthenticated.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:olosagentauthenticated.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\olosagentauthenticated.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:olosagentauthenticated.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\public\\js\\handlers.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:public\\js\\handlers.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\public\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:public\\css\\styles.css||{A5401142-F49D-43DB-90B1-F57BA349E55C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\olosagentauthenticated.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:olosagentauthenticated.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,11 +30,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 275,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 4,
               "Title": "OlosAgentAuthenticated.aspx",
               "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx",
               "RelativeDocumentMoniker": "OlosAgentAuthenticated.aspx",
@@ -40,15 +48,43 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 1,
               "Title": "OlosAgentAuthenticated.aspx.cs",
               "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx.cs",
               "RelativeDocumentMoniker": "OlosAgentAuthenticated.aspx.cs",
               "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx.cs",
               "RelativeToolTip": "OlosAgentAuthenticated.aspx.cs",
-              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAcAAAAAAAAA",
+              "ViewState": "AQIAANMAAAAAAAAAAAAAAPcAAAABAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-07-18T11:30:44.093Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "olosagentsdk.js",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js",
+              "RelativeDocumentMoniker": "public\\js\\olosagentsdk.js",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js",
+              "RelativeToolTip": "public\\js\\olosagentsdk.js",
+              "ViewState": "AQIAAM0hAAAAAAAAAAAAAPEhAAAHAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-07-17T20:48:25.212Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "handlers.js",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\handlers.js",
+              "RelativeDocumentMoniker": "public\\js\\handlers.js",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\handlers.js",
+              "RelativeToolTip": "public\\js\\handlers.js",
+              "ViewState": "AQIAAAgAAAAAAAAAAAAuwC4AAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-07-19T14:45:48.694Z",
               "IsPinned": true,
               "EditorCaption": ""
             },
@@ -66,15 +102,15 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "olosagentsdk.js",
-              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js",
-              "RelativeDocumentMoniker": "public\\js\\olosagentsdk.js",
-              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js",
-              "RelativeToolTip": "public\\js\\olosagentsdk.js",
-              "ViewState": "AQIAAJkiAAAAAAAAAAAAAM4iAAAGAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-07-17T20:48:25.212Z",
+              "DocumentIndex": 3,
+              "Title": "styles.css",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\css\\styles.css",
+              "RelativeDocumentMoniker": "public\\css\\styles.css",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\css\\styles.css",
+              "RelativeToolTip": "public\\css\\styles.css",
+              "ViewState": "AQIAAHgAAAAAAAAAAAAAAKUAAAARAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003000|",
+              "WhenOpened": "2024-07-19T15:06:06.099Z",
               "EditorCaption": ""
             }
           ]

@@ -8711,10 +8711,8 @@
 				agentWS.manualCallStateRequest();
 				agentWS.sendManualCallRequest(ddd, phoneNumber, campaignId);
 				console.log('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
-				showSnackBar('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
 			} else {
 				console.error('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
-				showSnackbar('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
 			}
 		}
 

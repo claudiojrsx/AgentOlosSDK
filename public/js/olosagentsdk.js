@@ -8567,6 +8567,7 @@
 		var phoneNumberGlobal = null;
 		var globalCallId = null;
 		var globalCampaignId = null;
+		var globalDispositionCode = null;
 
 		$(document).ready(function () {
 			$('#btnCallRequest').prop('disabled');
@@ -8669,6 +8670,34 @@
 			});
 		});
 
+		$(document).ready(function () {
+			function checkScreenPop() {
+				$.ajax({
+					url: "OlosAgentAuthenticated.aspx/CheckScreenPop",
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: function (response) {
+						if (response.d) {
+							globalDispositionCode = response.d;
+							console.log("Valor encontrado: " + response.d);
+						} else {
+							globalDispositionCode = null;
+						}
+
+						if (globalDispositionCode && globalDispositionCode.trim() !== "") {
+							OlosAgent.hangupAndDispositionCallByCode(globalDispositionCode);
+						}
+					},
+					error: function (error) {
+						console.log("Erro na requisição: " + error);
+					}
+				});
+			}
+
+			setInterval(checkScreenPop, 1000);
+		});
+
         function GetCampaignId(logincampaign) {
             $.ajax({
                 url: '/OlosAgentAuthenticated.aspx/GetCampaignId',
@@ -8711,10 +8740,8 @@
 				agentWS.manualCallStateRequest();
 				agentWS.sendManualCallRequest(ddd, phoneNumber, campaignId);
 				console.log('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
-				showSnackBar('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
 			} else {
 				console.error('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
-				showSnackbar('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
 			}
 		}
 
