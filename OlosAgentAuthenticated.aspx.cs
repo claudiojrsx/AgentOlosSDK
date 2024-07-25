@@ -29,16 +29,6 @@ namespace OlosAgentSDK
                 string dbPort = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["G"])).Replace("ñ", "1");
                 string idUsuario = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["H"])).Replace("ñ", "1");
 
-                // Logs de depuração
-                Console.WriteLine($"agentLogin: {agentLogin}");
-                Console.WriteLine($"agentPassword: {agentPassword}");
-                Console.WriteLine($"dbServerIp: {dbServerIp}");
-                Console.WriteLine($"dbName: {dbName}");
-                Console.WriteLine($"dbLogin: {dbLogin}");
-                Console.WriteLine($"dbPassword: {dbPassword}");
-                Console.WriteLine($"dbPort: {dbPort}");
-                Console.WriteLine($"idUsuario: {idUsuario}");
-
                 funcoes.SetSession("idUsuario", idUsuario);
 
                 funcoes.Connection(
@@ -237,11 +227,30 @@ namespace OlosAgentSDK
                 AND DDD = '{func.GetSession("phoneNumberDDD", "0")}'
                 AND TELEFONE = '{func.GetSession("phoneNumber", "0")}'
                 AND COD_FIM IS NOT NULL");
+
                 return query;
             }
             catch
             {
                 return null;
+            }
+        }
+
+        [WebMethod]
+        public static string ChangeStatus(ChangeStatus changestatus)
+        {
+            try
+            {
+                int agentId = changestatus.agentId;
+                string agentStatusId = changestatus.agentStatusId;
+                int reasonId = changestatus.reasonId;
+                string reasonDescription = changestatus.reasonDescription;
+
+                return agentStatusId;
+            }
+            catch (Exception ex)
+            {
+                return "Erro: " + ex.Message;
             }
         }
     }

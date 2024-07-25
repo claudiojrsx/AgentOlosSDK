@@ -8567,21 +8567,23 @@
 		var phoneNumberGlobal = null;
 		var globalCallId = null;
 		var globalCampaignId = null;
+		var globalDispositionCode = null;
 
 		$(document).ready(function () {
-			$('#btnCallRequest').prop('disabled');
-
 			$('#btnCallRequest').click(function () {
 				dddGlobal = $('#inputDdd').val();
 				phoneNumberGlobal = $('#inputPhoneNumber').val();
 
-				console.log("Inputed ddd: ", dddGlobal);
-				console.log("Inputed phoneNumber: ", phoneNumberGlobal);
+				console.log("DDD digitado: ", dddGlobal);
+				console.log("PhoneNumber digitado: ", phoneNumberGlobal);
 
 				if (globalCampaignIdAtiva) {
 					sendManualCallRequest(dddGlobal, phoneNumberGlobal, globalCampaignIdAtiva);
+					console.log(`Ligação manual efetivada com sucesso: ${dddGlobal}, ${phoneNumberGlobal}, ${globalCampaignIdAtiva}`);
+					showSnackbar(`Ligação manual efetivada com sucesso: ${dddGlobal}, ${phoneNumberGlobal}, ${globalCampaignIdAtiva}`);
 				} else {
 					console.error('CampaignId não disponível. Certifique-se de que callGetCampaignId foi chamado e completado com sucesso.');
+					showSnackbar('CampaignId não disponível. Certifique-se de que callGetCampaignId foi chamado e completado com sucesso.');
 				}
 			});
 		});
@@ -8619,7 +8621,7 @@
 							showSnackbar(`Pausa enviada com sucesso: ${reasonId}`);
 						} else {
 							console.error('Request failed: ', response);
-							showSnackBar('Request failed: ', response);
+							showSnackbar('Request failed: ', response);
 						}
 					},
 					error: function (error) {
@@ -8669,6 +8671,36 @@
 			});
 		});
 
+		$(document).ready(function () {
+			function checkScreenPop() {
+				$.ajax({
+					url: "OlosAgentAuthenticated.aspx/CheckScreenPop",
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: function (response) {
+						if (response.d) {
+							globalDispositionCode = response.d;
+							console.log("Valor encontrado: " + response.d);
+						} else {
+							globalDispositionCode = null;
+						}
+
+						if (globalDispositionCode && globalDispositionCode.trim() !== "") {
+							OlosAgent.hangupAndDispositionCallByCode(globalDispositionCode);
+
+							globalDispositionCode = null;
+						}
+					},
+					error: function (error) {
+						console.log("Erro na requisição: " + error);
+					}
+				});
+			}
+
+			setInterval(checkScreenPop, 1000);
+		});
+
         function GetCampaignId(logincampaign) {
             $.ajax({
                 url: '/OlosAgentAuthenticated.aspx/GetCampaignId',
@@ -8704,16 +8736,6 @@
 					console.error('Erro ao processar evento no servidor:', error);
 				}
 			});
-		}
-
-		function sendManualCallRequest(ddd, phoneNumber, campaignId) {
-			if (ddd && phoneNumber && campaignId) {
-				agentWS.manualCallStateRequest();
-				agentWS.sendManualCallRequest(ddd, phoneNumber, campaignId);
-				console.log('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
-			} else {
-				console.error('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
-			}
 		}
 
 		function callAgentIdWebMethod(agentId) {
@@ -8789,7 +8811,6 @@
             });
 		}
 
-		/*Enviando ListReasons*/
 		function listReasons() {
 			agentWS.listReasons((listReasons) => {
 				if (listReasons) {
@@ -8820,7 +8841,6 @@
             });
         }
 
-		/*Ouvindo evento ListDispositions*/
 		$(document).ready(function () {
 			olosagentsdk_umd.exports.olosOn("ListDispositions", (result) => {
 				console.log("Evento ListDispositions ouvido:", result);
@@ -8847,7 +8867,39 @@
 			}
 		});
 
-		/* Funções */
+		/*Eventos olosOn*/
+        olosagentsdk_umd.exports.olosOn("changestatus", (payload) => {
+            sendChangeStatus(payload);
+            console.log(`Evento Changestatus ouvido: ${JSON.stringify(payload)}`);
+            showSnackbar(`Evento Changestatus ouvido: ${JSON.stringify(payload)}`);
+        });
+
+		/*Funções*/
+		function sendChangeStatus(changestatus) {
+			$.ajax({
+				url: '/OlosAgentAuthenticated.aspx/ChangeStatus',
+				type: 'POST',
+				contentType: 'application/json; charset=utf-8',
+				data: JSON.stringify({ changestatus: changestatus }),
+				dataType: 'json',
+				success: function (response) {
+					console.log('Change status sucesso:', response);
+
+					if (changestatus && changestatus.agentStatusId) {
+						$('#idChangeStatus').text('Status do usuário: ' + changestatus.agentStatusId);
+						console.log('agentStatusId armazenado:', changestatus.agentStatusId);
+					} else {
+						console.error('agentId ou agentStatusId não encontrado.');
+					}
+				},
+				error: function (xhr, status, error) {
+					console.error('Erro ao carregar o status: ', error);
+					console.error('Status: ', status);
+					console.error('Response Text: ', xhr.responseText);
+				}
+			});
+		}
+
 		function agentReasonRequest(reasonId) {
 			agentWS.agentReasonRequest(reasonId, (reasonId) => {
 				console.log(`Agent request pause: ${reasonId}`);
@@ -8895,6 +8947,18 @@
 			}
 		}
 
+		function sendManualCallRequest(ddd, phoneNumber, campaignId) {
+			if (ddd && phoneNumber && campaignId) {
+				agentWS.manualCallStateRequest();
+				agentWS.sendManualCallRequest(ddd, phoneNumber, campaignId);
+				console.log('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
+				showSnackbar(`Ligação Manual efetuada com sucesso: ${ddd}, ${phoneNumber}, ${campaignId}`);
+			} else {
+				console.error('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
+				showSnackbar(`Parâmetros inválidos para a chamada manual: ${ddd}, ${phoneNumber}, ${campaignId}`);
+			}
+		}
+
 		return {
 			authenticatedOlos,
 			agentLogout,
@@ -8904,7 +8968,8 @@
 			agentReasonRequest,
 			listDispositions,
 			hangupAndDispositionCallByCode,
-			hangupRequest
+			hangupRequest,
+			sendChangeStatus
 		};
 	})();
 

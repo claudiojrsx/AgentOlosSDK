@@ -115,6 +115,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Pages\SendManualCallRequest.aspx" />
     <Content Include="OlosAgentAuthenticated.aspx" />
     <Content Include="public\css\materialize-1.0.0\materialize.min.css" />
     <Content Include="public\css\materialize\materialize.css" />
@@ -139,6 +140,7 @@
     <Content Include="public\material-design\material-components-web.css" />
     <Content Include="public\material-design\material-components-web.min.css" />
     <Content Include="public\material-design\material-icons.css" />
+    <Content Include="public\olos-laranja.png" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
@@ -146,6 +148,14 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Api\ManualCallRequestHandler.cs" />
+    <Compile Include="Pages\SendManualCallRequest.aspx.cs">
+      <DependentUpon>SendManualCallRequest.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\SendManualCallRequest.aspx.designer.cs">
+      <DependentUpon>SendManualCallRequest.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Config\Funcoes.cs" />
     <Compile Include="Models\Olos.cs" />
     <Compile Include="OlosAgentAuthenticated.aspx.cs">

@@ -33,15 +33,6 @@ namespace OlosAgentSDK
         protected global::System.Web.UI.ScriptManager ScriptManager;
 
         /// <summary>
-        /// updatePanelLogout control.
-        /// </summary>
-        /// <remarks>
-        /// Auto-generated field.
-        /// To modify move field declaration from designer file to code-behind file.
-        /// </remarks>
-        protected global::System.Web.UI.UpdatePanel updatePanelLogout;
-
-        /// <summary>
         /// updatePanelHangup control.
         /// </summary>
         /// <remarks>
@@ -51,13 +42,13 @@ namespace OlosAgentSDK
         protected global::System.Web.UI.UpdatePanel updatePanelHangup;
 
         /// <summary>
-        /// ddlPausas control.
+        /// updatePanelLogout control.
         /// </summary>
         /// <remarks>
         /// Auto-generated field.
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
-        protected global::System.Web.UI.WebControls.DropDownList ddlPausas;
+        protected global::System.Web.UI.UpdatePanel updatePanelLogout;
 
         /// <summary>
         /// ddlDispositions control.
@@ -67,5 +58,14 @@ namespace OlosAgentSDK
         /// To modify move field declaration from designer file to code-behind file.
         /// </remarks>
         protected global::System.Web.UI.WebControls.DropDownList ddlDispositions;
+
+        /// <summary>
+        /// ddlPausas control.
+        /// </summary>
+        /// <remarks>
+        /// Auto-generated field.
+        /// To modify move field declaration from designer file to code-behind file.
+        /// </remarks>
+        protected global::System.Web.UI.WebControls.DropDownList ddlPausas;
     }
 }

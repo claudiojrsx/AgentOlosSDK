@@ -40,7 +40,11 @@ document.addEventListener("DOMContentLoaded", () => {
     });
     addButtonEventListener("btnPausa", "agentReasonRequest");
     addButtonEventListener("btnRetornar", "agentIdleRequest");
-    addButtonEventListener("btnHangup", "hangupRequest");
+
+    addButtonEventListener("btnHangup", "hangupRequest", () => {
+        showSnackbar(`Ligação finalizada com sucesso!`);
+    });
+
     addButtonEventListener("btnSendDisposition", "listDispositions");
     addButtonEventListener("btnListarReasons", "listReasons");
 });

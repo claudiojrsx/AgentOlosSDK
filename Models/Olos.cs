@@ -10,21 +10,6 @@ namespace OlosAgentSDK.Models
             public int CampaignId { get; set; }
             public string CampaignName { get; set; }
             public string CampaignCode { get; set; }
-            public List<Campaign> Campaign { get; set; }
-        }
-
-        public class Campaign
-        {
-            public string CampaignId { get; set; }
-            public string CampaignName { get; set; }
-        }
-
-        public class AgentChangeStatus
-        {
-            public int agentId { get; set; }
-            public string agentStatusId { get; set; }
-            public int reasonId { get; set; }
-            public string reasonDescription { get; set; }
         }
 
         public class ScreenPop
@@ -44,6 +29,14 @@ namespace OlosAgentSDK.Models
             public bool previewCall { get; set; }
             public bool automaticPreviewCall { get; set; }
             public string channel { get; set; }
+        }
+
+        public class ChangeStatus
+        {
+            public int agentId { get; set; }
+            public string agentStatusId { get; set; }
+            public int reasonId { get; set; }
+            public string reasonDescription { get; set; }
         }
     }
 }
