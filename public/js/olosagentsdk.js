@@ -8569,6 +8569,10 @@
 		var globalCampaignId = null;
 		var globalDispositionCode = null;
 
+		var globalCobDDD = null;
+		var globalCobPhoneNumber = null;
+		var globalCobCampaignIdManual = null;
+
 		$(document).ready(function () {
 			$('#btnCallRequest').click(function () {
 				dddGlobal = $('#inputDdd').val();
@@ -8699,6 +8703,36 @@
 			}
 
 			setInterval(checkScreenPop, 1000);
+		});
+
+		$(document).ready(function () {
+			function checkManualCall() {
+				$.ajax({
+					url: "/Pages/SendManualCallRequest.aspx/CheckSendManualCall",
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: function (response) {
+						if (response.d) {
+							var data = JSON.parse(response.d);
+							globalCobDDD = data.DDD;
+							globalCobPhoneNumber = data.TELEFONE;
+
+							if (globalCobDDD && globalCobPhoneNumber) {
+								agentWS.manualCallStateRequest();
+								agentWS.sendManualCallRequest(globalCobDDD, globalCobPhoneNumber, globalCampaignIdAtiva);
+							}
+						} else {
+							console.log("Nenhum dado encontrado.");
+						}
+					},
+					error: function (error) {
+						console.log("Erro na requisição: " + error);
+					}
+				});
+			}
+
+			setInterval(checkManualCall, 5000);
 		});
 
         function GetCampaignId(logincampaign) {

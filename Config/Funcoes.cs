@@ -10,6 +10,7 @@ using System.Text;
 using System.Web;
 using System.Web.UI;
 using System.Web.UI.WebControls;
+using System.Collections.Generic;
 
 namespace OlosAgentSDK
 {
@@ -186,6 +187,67 @@ namespace OlosAgentSDK
                 cmd.Dispose();
             }
             return null;
+        }
+
+        public Dictionary<string, Dictionary<int, object>> ValoresSQL2(SqlDataReader read, int result = 1)
+        {
+            if (read != null)
+            {
+                if (read.HasRows)
+                {
+                    for (int i = 1; i < result; i++)
+                        read.NextResult();
+
+                    int qntcolunas = read.VisibleFieldCount;
+                    string[] colunas = new string[qntcolunas];
+
+                    for (int i = 0; i < qntcolunas; i++)
+                        colunas[i] = read.GetName(i);
+
+                    int x = 0;
+                    Dictionary<int, object[]> registrosdic = new Dictionary<int, object[]>();
+                    while (read.Read())
+                    {
+                        object[] registros = new object[qntcolunas];
+                        for (int i = 0; i < qntcolunas; i++)
+                            registros[i] = read.GetValue(i);
+                        registrosdic.Add(x, registros);
+                        x++;
+                    }
+
+                    Dictionary<string, Dictionary<int, object>> dictionary = new Dictionary<string, Dictionary<int, object>>();
+
+                    for (int c = 0; c < qntcolunas; c++)
+                    {
+                        Dictionary<int, object> coldictionary = new Dictionary<int, object>();
+                        for (int i = 0; i < x; i++)
+                            coldictionary.Add(i, registrosdic[i][c]);
+                        dictionary.Add(colunas[c], coldictionary);
+                    }
+
+                    read.Close();
+                    return dictionary;
+                }
+            }
+            return null;
+        }
+
+        public Dictionary<string, Dictionary<int, object>> ValoresSQL2(string pSELECT, int result = 1)
+        {
+            return ValoresSQL2(Abre_Data(pSELECT), result);
+        }
+
+        public bool ExisteRegistro(string pSELECT)
+        {
+            SqlDataReader read;
+            bool existe = false;
+            read = Abre_Data(pSELECT);
+            if (read != null)
+            {
+                existe = read.HasRows;
+                read.Close();
+            }
+            return existe;
         }
 
         public void Executa_Data(String pCommand, Boolean pVerificaErro = true, SqlConnection conn = null)
@@ -633,19 +695,6 @@ namespace OlosAgentSDK
             {
                 return false;
             }
-        }
-
-        public bool ExisteRegistro(string pSELECT)
-        {
-            SqlDataReader read;
-            bool existe = false;
-            read = Abre_Data(pSELECT);
-            if (read != null)
-            {
-                existe = read.HasRows;
-                read.Close();
-            }
-            return existe;
         }
     }
 }

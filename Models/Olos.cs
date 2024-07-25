@@ -38,5 +38,14 @@ namespace OlosAgentSDK.Models
             public int reasonId { get; set; }
             public string reasonDescription { get; set; }
         }
+
+        public class ManualCallData
+        {
+            public string ID_USUARIO { get; set; }
+            public string CPF_CNPJ { get; set; }
+            public string DDD { get; set; }
+            public string TELEFONE { get; set; }
+            public string DATA { get; set; }
+        }
     }
 }

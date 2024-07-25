@@ -220,13 +220,21 @@ namespace OlosAgentSDK
             try
             {
                 string query = func.ValorSQL($@"
-                SELECT COD_FIM
-                FROM POPUPcob (NOLOCK) 
-                WHERE ID_LIGACAO = '{func.GetSession("callId", "0")}'
-                AND CPF_CNPJ = '{func.GetSession("customerId", "0")}'
-                AND DDD = '{func.GetSession("phoneNumberDDD", "0")}'
-                AND TELEFONE = '{func.GetSession("phoneNumber", "0")}'
-                AND COD_FIM IS NOT NULL");
+                SELECT  COD_FIM
+                FROM    POPUPcob (NOLOCK) 
+                WHERE   ID_LIGACAO = '{func.GetSession("callId", "0")}'
+                AND     CPF_CNPJ = '{func.GetSession("customerId", "0")}'
+                AND     DDD = '{func.GetSession("phoneNumberDDD", "0")}'
+                AND     TELEFONE = '{func.GetSession("phoneNumber", "0")}'
+                AND     COD_FIM IS NOT NULL");
+
+                if (!string.IsNullOrEmpty(query))
+                {
+                    func.ValorSQL($@"
+                    DELETE FROM POPUPcob
+                    WHERE COD_FIM = '{query}'
+                    AND ID_LIGACAO = '{func.GetSession("callId", "0")}'");
+                }
 
                 return query;
             }
