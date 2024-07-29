@@ -1,7 +1,32 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\",
-  "Documents": [],
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\pages\\sendmanualcallrequest.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:pages\\sendmanualcallrequest.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\pages\\logincampaign.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:pages\\logincampaign.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\olosagentauthenticated.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:olosagentauthenticated.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\olosagentauthenticated.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:olosagentauthenticated.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\models\\olos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:models\\olos.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 1,
@@ -9,8 +34,64 @@
       "DocumentGroups": [
         {
           "DockedHeight": 275,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 2,
           "Children": [
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "OlosAgentAuthenticated.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx.cs",
+              "RelativeDocumentMoniker": "OlosAgentAuthenticated.aspx.cs",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx.cs",
+              "RelativeToolTip": "OlosAgentAuthenticated.aspx.cs",
+              "ViewState": "AQIAAM0AAAAAAAAAAAAAANIAAAArAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-26T20:42:46.163Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "OlosAgentAuthenticated.aspx",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx",
+              "RelativeDocumentMoniker": "OlosAgentAuthenticated.aspx",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx",
+              "RelativeToolTip": "OlosAgentAuthenticated.aspx",
+              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
+              "WhenOpened": "2024-07-26T13:48:45.371Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "SendManualCallRequest.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Pages\\SendManualCallRequest.aspx.cs",
+              "RelativeDocumentMoniker": "Pages\\SendManualCallRequest.aspx.cs",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Pages\\SendManualCallRequest.aspx.cs",
+              "RelativeToolTip": "Pages\\SendManualCallRequest.aspx.cs",
+              "ViewState": "AQIAAIUAAAAAAAAAAAAMwDYAAAA/AAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-26T14:34:00.938Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Logincampaign.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Pages\\Logincampaign.aspx.cs",
+              "RelativeDocumentMoniker": "Pages\\Logincampaign.aspx.cs",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Pages\\Logincampaign.aspx.cs",
+              "RelativeToolTip": "Pages\\Logincampaign.aspx.cs",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAAACEAAABBAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-26T13:17:18.774Z",
+              "IsPinned": true,
+              "EditorCaption": ""
+            },
             {
               "$type": "Bookmark",
               "Name": "ST:11:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
@@ -22,6 +103,32 @@
             {
               "$type": "Bookmark",
               "Name": "ST:12:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "Olos.cs",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Models\\Olos.cs",
+              "RelativeDocumentMoniker": "Models\\Olos.cs",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Models\\Olos.cs",
+              "RelativeToolTip": "Models\\Olos.cs",
+              "ViewState": "AQIAAA4AAAAAAAAAAAAewDYAAAABAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-29T13:31:23.233Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "olosagentsdk.js",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js",
+              "RelativeDocumentMoniker": "public\\js\\olosagentsdk.js",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js",
+              "RelativeToolTip": "public\\js\\olosagentsdk.js",
+              "ViewState": "AQIAAPkhAAAAAAAAAAAewBUiAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
+              "WhenOpened": "2024-07-26T13:13:02.335Z",
+              "EditorCaption": ""
             }
           ]
         }

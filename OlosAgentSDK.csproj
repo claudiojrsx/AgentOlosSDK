@@ -115,6 +115,7 @@
     <Reference Include="System.EnterpriseServices" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Pages\Logincampaign.aspx" />
     <Content Include="Pages\SendManualCallRequest.aspx" />
     <Content Include="OlosAgentAuthenticated.aspx" />
     <Content Include="public\css\materialize-1.0.0\materialize.min.css" />
@@ -128,6 +129,7 @@
     <Content Include="public\js\materialize\materialize.min.js" />
     <Content Include="public\js\olosagentsdk.js" />
     <Content Include="public\js\materialize\materialize.min.js.map" />
+    <Content Include="public\logo\cob-olos.png" />
     <Content Include="public\material-design-snackbar\mdc.snackbar.min.css" />
     <Content Include="public\material-design-snackbar\mdc.snackbar.min.js" />
     <Content Include="public\material-design\js\material-components-web.js.map" />
@@ -149,6 +151,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Api\ManualCallRequestHandler.cs" />
+    <Compile Include="Pages\Logincampaign.aspx.cs">
+      <DependentUpon>Logincampaign.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Logincampaign.aspx.designer.cs">
+      <DependentUpon>Logincampaign.aspx</DependentUpon>
+    </Compile>
     <Compile Include="Pages\SendManualCallRequest.aspx.cs">
       <DependentUpon>SendManualCallRequest.aspx</DependentUpon>
       <SubType>ASPXCodeBehind</SubType>

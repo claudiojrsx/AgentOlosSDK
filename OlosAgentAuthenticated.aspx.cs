@@ -146,12 +146,6 @@ namespace OlosAgentSDK
         }
 
         [WebMethod]
-        public static int GetCampaignId(LoginCampaign loginCampaign)
-        {
-            return loginCampaign.CampaignId;
-        }
-
-        [WebMethod]
         public static string GetReceptivaCampaignId(ScreenPop screenPop)
         {
             return $@"{screenPop.campaignId}";

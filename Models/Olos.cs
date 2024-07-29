@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-
-namespace OlosAgentSDK.Models
+﻿namespace OlosAgentSDK.Models
 {
     public class Olos
     {
@@ -46,6 +44,12 @@ namespace OlosAgentSDK.Models
             public string DDD { get; set; }
             public string TELEFONE { get; set; }
             public string DATA { get; set; }
+        }
+
+        public class ChangeManualCallState
+        {
+            public int callId { get; set; }
+            public string callState { get; set; }
         }
     }
 }

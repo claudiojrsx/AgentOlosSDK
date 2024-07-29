@@ -35,11 +35,11 @@
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
 
-        <header id="top-app-bar" class="mdc-top-app-bar">
+        <header id="top-app-bar" class="mdc-top-app-bar blue darken-4">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                     <a href="#" class="brand-logo left mt-2 white-text mdc-top-app-bar__title">
-                        <img src="public/olos-laranja.png" alt="Logo da OLOS" style="height: 45px;">
+                        <img src="public/logo/cob-olos.png" alt="Logo da OLOS" style="height: 60px;">
                     </a>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
