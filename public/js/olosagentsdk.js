@@ -8575,14 +8575,14 @@
 
 		$(document).ready(function () {
 			$('#btnCallRequest').click(function () {
-				dddGlobal = $('#inputDdd').val();
-				phoneNumberGlobal = $('#inputPhoneNumber').val();
+				var dddGlobal = $('#inputDdd').val();
+				var phoneNumberGlobal = $('#inputPhoneNumber').val();
 
 				console.log("DDD digitado: ", dddGlobal);
 				console.log("PhoneNumber digitado: ", phoneNumberGlobal);
 
 				if (globalCampaignIdAtiva) {
-					sendManualCallRequest(dddGlobal, phoneNumberGlobal, globalCampaignIdAtiva);
+					sendManualCallRequest(dddGlobal, phoneNumberGlobal, globalCampaignIdAtiva, true);
 					console.log(`Ligação manual efetivada com sucesso: ${dddGlobal}, ${phoneNumberGlobal}, ${globalCampaignIdAtiva}`);
 					showSnackbar(`Ligação manual efetivada com sucesso: ${dddGlobal}, ${phoneNumberGlobal}, ${globalCampaignIdAtiva}`);
 				} else {
@@ -8738,6 +8738,26 @@
         });
 
 		$(document).ready(function () {
+			$('#btnCallRequest').click(function () {
+				var dddGlobal = $('#inputDdd').val();
+				var phoneNumberGlobal = $('#inputPhoneNumber').val();
+
+				// Envia os dados para o servidor e armazena em sessão
+				$.ajax({
+					type: "POST",
+					url: "/Pages/SendManualCallRequest.aspx/SetManualCallSession",
+					data: JSON.stringify({ ddd: dddGlobal, phoneNumber: phoneNumberGlobal, isManualCall: true }),
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: function (response) {
+						console.log('Sessão atualizada:', response.d);
+					},
+					error: function (xhr, status, error) {
+						console.error('Erro ao enviar a requisição:', error);
+					}
+				});
+			});
+
 			function checkManualCall() {
 				$.ajax({
 					url: "/Pages/SendManualCallRequest.aspx/CheckSendManualCall",
@@ -8750,10 +8770,11 @@
 							globalCobDDD = data.DDD;
 							globalCobPhoneNumber = data.TELEFONE;
 
-							if (globalCobDDD && globalCobPhoneNumber) {
-								agentWS.manualCallStateRequest();
-								agentWS.sendManualCallRequest(globalCobDDD, globalCobPhoneNumber, globalCampaignIdAtiva);
-							}
+                            if (globalCobDDD && globalCobPhoneNumber) {
+                                console.log("Chamada manual iniciada pelo usuário.");
+                                agentWS.manualCallStateRequest();
+                                agentWS.sendManualCallRequest(globalCobDDD, globalCobPhoneNumber, globalCampaignIdAtiva);
+                            }
 						} else {
 							console.log("Nenhum valor encontrado.");
 						}
@@ -8764,7 +8785,7 @@
 				});
 			}
 
-			setInterval(checkManualCall, 1000);
+			setInterval(checkManualCall, 3000);
 		});
 
 		function GetReceptivaCampaignId(screenPop) {
@@ -8941,6 +8962,8 @@
 					if (changeManualCallState && changeManualCallState.callId) {
 						console.log('callId armazenado com sucesso: ' + changeManualCallState.callId);
 						console.log('callState armazenado com sucesso: ' + changeManualCallState.callState);
+
+						$('#idChangeStatus').text('Status do usuário: ' + changeManualCallState.callState);
 					} else {
 						console.error('callId não encontrado.');
 					}
@@ -8980,26 +9003,28 @@
 			});
 		}
 
-        function checkLoginCampaign(loginCampaign) {
-            $.ajax({
-                url: "/Pages/Logincampaign.aspx/GetLoginCampaignIdAtiva",
-                type: "POST",
-                contentType: "application/json; chartset=utf-8",
-                dataType: "json",
-                data: JSON.stringify({ loginCampaign: loginCampaign }),
+		function checkLoginCampaign(loginCampaign) {
+			$.ajax({
+				url: "/Pages/Logincampaign.aspx/GetLoginCampaignIdAtiva",
+				type: "POST",
+				contentType: "application/json; charset=utf-8",
+				dataType: "json",
+				data: JSON.stringify({ loginCampaign: loginCampaign }),
 				success: function (response) {
-					globalCampaignIdAtiva = loginCampaign.campaignId;
+					if (response && response.d) {
+						globalCampaignIdAtiva = response.d;
+						console.log(`ID da campanha ativa retornado: ${globalCampaignIdAtiva}`);
 
-					$('#campaignIdAtiva').text('Campanha Ativa: ' + globalCampaignIdAtiva);
-                    console.log(`LoginCampaign carregado com sucesso: ${response}`);
-                },
-                error: function (xhr, status, error) {
-                    console.error('Erro ao carregar campanha ativa: ', error);
-                    console.error('Status: ', status);
-                    console.error('Response Text: ', xhr.responseText);
-                }
-            });
-        }
+						$('#campaignIdAtiva').text('Campanha Ativa: ' + globalCampaignIdAtiva);
+					}
+				},
+				error: function (xhr, status, error) {
+					console.error('Erro ao carregar campanha ativa: ', error);
+					console.error('Status: ', status);
+					console.error('Response Text: ', xhr.responseText);
+				}
+			});
+		}
 
 		function agentReasonRequest(reasonId) {
 			agentWS.agentReasonRequest(reasonId, (reasonId) => {
@@ -9060,6 +9085,16 @@
 			}
 		}
 
+		function manualCallMode() {
+			agentWS.manualCallStateRequest();
+			showSnackbar('Modo chamada manual solicitado com sucesso!');
+		}
+
+		function endManualCallStateRequest() {
+			agentWS.endManualCallStateRequest();
+			showSnackbar('Modo chamada manual encerrado com sucesso!');
+		}
+
 		return {
 			authenticatedOlos,
 			agentLogout,
@@ -9071,7 +9106,9 @@
 			hangupAndDispositionCallByCode,
 			hangupRequest,
 			sendChangeStatus,
-			checkLoginCampaign
+			checkLoginCampaign,
+			manualCallMode,
+			endManualCallStateRequest
 		};
 	})();
 

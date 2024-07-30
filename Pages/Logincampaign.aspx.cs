@@ -20,24 +20,17 @@ namespace OlosAgentSDK.Pages
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public static string GetLoginCampaignIdAtiva(LoginCampaign loginCampaign)
         {
-            Funcoes funcoes = new Funcoes();
-
             try
             {
-                int agentId = loginCampaign.AgentId;
-                int campaignId = loginCampaign.CampaignId;
-                string campaignName = loginCampaign.CampaignName;
-                string campaignCode = loginCampaign.CampaignCode;
-
-                if (loginCampaign.CampaignName.Contains("Ativa"))
+                if (loginCampaign.CampaignName.IndexOf("Ativa", StringComparison.OrdinalIgnoreCase) >= 0)
                 {
-                    funcoes.SetSession("CampaignId", campaignId);
+                    int campaignId = loginCampaign.CampaignId;
+                    Funcoes funcoes = new Funcoes();
+                    funcoes.SetSession("CampaignIdAtiva", campaignId);
                     return campaignId.ToString();
                 }
-                else
-                {
-                    return funcoes.GetSession("CampaignId", "0").ToString();
-                }
+
+                return null;
             }
             catch (Exception ex)
             {

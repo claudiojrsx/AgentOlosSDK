@@ -17,6 +17,14 @@ namespace OlosAgentSDK.Pages
         }
 
         [WebMethod]
+        public static void SetManualCallSession(string ddd, string phoneNumber, bool isManualCall)
+        {
+            HttpContext.Current.Session["DDD"] = ddd;
+            HttpContext.Current.Session["TELEFONE"] = phoneNumber;
+            HttpContext.Current.Session["IsManualCall"] = isManualCall;
+        }
+
+        [WebMethod]
         [ScriptMethod(ResponseFormat = ResponseFormat.Json)]
         public static string CheckSendManualCall()
         {
@@ -24,49 +32,62 @@ namespace OlosAgentSDK.Pages
 
             try
             {
-                var query = funcoes.ValoresSQL2(
-                $@"
-                SELECT	ID_USUARIO = AA.idUSUARIO,
-                        CPF_CNPJ = AA.CPF_CNPJ,
-                        DDD = AA.DDD,
-                        TELEFONE = AA.TELEFONE,
-                        DATA = AA.DATA
-                FROM	POPUPlig_Manual AA (NOLOCK)
-                WHERE	idUSUARIO = '{funcoes.GetSession("idUsuario", "0")}'");
+                var isManualCall = HttpContext.Current.Session["IsManualCall"] != null
+                                   && (bool)HttpContext.Current.Session["IsManualCall"];
 
-                if (query != null && query.ContainsKey("ID_USUARIO") && query["ID_USUARIO"].Count > 0)
+                // Ligações manuais pelo OLOSweb.
+                if (isManualCall)
                 {
-                    ManualCallData data = new ManualCallData
-                    {
-                        ID_USUARIO = query["ID_USUARIO"][0].ToString(),
-                        CPF_CNPJ = query["CPF_CNPJ"][0].ToString(),
-                        DDD = query["DDD"][0].ToString(),
-                        TELEFONE = query["TELEFONE"][0].ToString(),
-                        DATA = query["DATA"][0].ToString()
-                    };
-
-                    funcoes.SetSession("ID_USUARIO", data.ID_USUARIO);
-                    funcoes.SetSession("CPF_CNPJ", data.CPF_CNPJ);
-                    funcoes.SetSession("DDD", data.DDD);
-                    funcoes.SetSession("TELEFONE", data.TELEFONE);
-
-                    string jsonResult = JsonConvert.SerializeObject(data);
-
-                    if (!string.IsNullOrEmpty(data.ID_USUARIO))
-                    {
-                        funcoes.ValorSQL($@"DELETE  AA 
-                                            FROM    POPUPlig_Manual AA (NOLOCK) 
-                                            WHERE   AA.idUSUARIO = {data.ID_USUARIO}
-                                            AND     AA.CPF_CNPJ = '{data.CPF_CNPJ}'
-                                            AND     AA.DDD = '{data.DDD}'
-                                            AND     AA.TELEFONE = '{data.TELEFONE}'");
-                    }
-
-                    return jsonResult;
+                    HttpContext.Current.Session["IsManualCall"] = false;
+                    return JsonConvert.SerializeObject(new { status = "manual_call", DDD = funcoes.GetSession("DDD", "0"), TELEFONE = funcoes.GetSession("TELEFONE", "0") });
                 }
                 else
                 {
-                    return JsonConvert.SerializeObject(new { error = "No data found" });
+                    // Ligações manuais pelo COBweb.
+                    var query = funcoes.ValoresSQL2(
+                    $@"
+                    SELECT	ID_USUARIO = AA.idUSUARIO,
+                            CPF_CNPJ = AA.CPF_CNPJ,
+                            DDD = AA.DDD,
+                            TELEFONE = AA.TELEFONE,
+                            DATA = AA.DATA
+                    FROM	POPUPlig_Manual AA (NOLOCK)
+                    WHERE	idUSUARIO = '{funcoes.GetSession("idUsuario", "0")}'");
+
+                    if (query != null && query["ID_USUARIO"].Count > 0)
+                    {
+                        ManualCallData data = new ManualCallData
+                        {
+                            ID_USUARIO = query["ID_USUARIO"][0].ToString(),
+                            CPF_CNPJ = query["CPF_CNPJ"][0].ToString(),
+                            DDD = query["DDD"][0].ToString(),
+                            TELEFONE = query["TELEFONE"][0].ToString(),
+                            DATA = query["DATA"][0].ToString()
+                        };
+
+                        funcoes.SetSession("ID_USUARIO", data.ID_USUARIO);
+                        funcoes.SetSession("CPF_CNPJ", data.CPF_CNPJ);
+                        funcoes.SetSession("DDD", data.DDD);
+                        funcoes.SetSession("TELEFONE", data.TELEFONE);
+
+                        string jsonResult = JsonConvert.SerializeObject(data);
+
+                        if (!string.IsNullOrEmpty(data.ID_USUARIO))
+                        {
+                            funcoes.ValorSQL($@"DELETE  AA 
+                                        FROM    POPUPlig_Manual AA (NOLOCK) 
+                                        WHERE   AA.idUSUARIO = {data.ID_USUARIO}
+                                        AND     AA.CPF_CNPJ = '{data.CPF_CNPJ}'
+                                        AND     AA.DDD = '{data.DDD}'
+                                        AND     AA.TELEFONE = '{data.TELEFONE}'");
+                        }
+
+                        return jsonResult;
+                    }
+                    else
+                    {
+                        return JsonConvert.SerializeObject(new { error = "No data found" });
+                    }
                 }
             }
             catch (Exception ex)
@@ -99,7 +120,7 @@ namespace OlosAgentSDK.Pages
                     string CPF_CNPJ = func.GetSession("CPF_CNPJ", "0").ToString();
                     string DDD = func.GetSession("DDD", "0").ToString();
                     string TELEFONE = func.GetSession("TELEFONE", "0").ToString();
-                    string ID_DISC_CAMPANHA = func.GetSession("CampaignId", "0").ToString();
+                    string ID_DISC_CAMPANHA = func.GetSession("CampaignIdAtiva", "0").ToString();
 
                     string sql = $@"SELECT TOP 1 1 
                                 FROM   POPUPcob (NOLOCK) 

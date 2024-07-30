@@ -35,11 +35,11 @@
     <form id="form1" runat="server">
         <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
 
-        <header id="top-app-bar" class="mdc-top-app-bar">
+        <header id="top-app-bar" class="mdc-top-app-bar blue darken-4">
             <div class="mdc-top-app-bar__row">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                     <a href="#" class="brand-logo left mt-2 white-text mdc-top-app-bar__title">
-                        <img src="public/olos-laranja.png" alt="Logo da OLOS" style="height: 45px;">
+                        <img src="public/logo/cob-olos.png" alt="Logo da OLOS" style="height: 60px;">
                     </a>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
@@ -99,30 +99,32 @@
                             </div>
                             <div class="card-tabs">
                                 <ul class="tabs tabs-fixed-width blue darken-4">
-                                    <li class="tab"><a href="#ligacaoManual" class="active flow-text">Ligação manual</a></li>
+                                    <li class="tab"><a href="#pausas" class="active flow-text">Pausas</a></li>
                                     <li class="tab"><a href="#dispositons" class="flow-text">Dispositions</a></li>
-                                    <li class="tab"><a href="#pausas" class="flow-text">Pausas</a></li>
+                                    <li class="tab"><a href="#ligacaoManual" class="flow-text">Ligação manual</a></li>
                                 </ul>
                             </div>
                             <div class="card-content">
-                                <div id="ligacaoManual">
-                                    <div class="row d-flex align-items-center">
-                                        <div class="input-field filled-in col s3">
-                                            <input id="inputDdd" class="blue darken-4" maxlength="2" placeholder=" ">
-                                            <label for="inputDdd">DDD</label>
-                                        </div>
+                                <div id="pausas">
+                                    <asp:DropDownList ID="ddlPausas" CssClass="browser-default blue darken-4 border-radius font-color-white mb-3" runat="server" />
+                                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 container-gap">
+                                        <button class="mdc-button mdc-button--raised green darken-4" id="btnPausa">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Enviar pausa</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
+                                        </button>
 
-                                        <div class="input-field filled-in col s6">
-                                            <input id="inputPhoneNumber" class="blue darken-4" maxlength="9" placeholder=" ">
-                                            <label for="inputPhoneNumber">Telefone</label>
-                                        </div>
+                                        <button class="mdc-button mdc-button--raised blue darken-4" id="btnRetornar" type="button">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Retornar pausa</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">flip_to_back</i>
+                                        </button>
 
-                                        <div class="input-field center-align">
-                                            <button class="mdc-fab green darken-4" id="btnCallRequest" type="button" aria-label="phone">
-                                                <span class="mdc-fab__ripple"></span>
-                                                <i class="material-icons mdc-fab__icon">phone</i>
-                                            </button>
-                                        </div>
+                                        <button class="mdc-button mdc-button--raised blue darken-4" id="btnListarReasons">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Listar pausas</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">list_alt</i>
+                                        </button>
                                     </div>
                                 </div>
                                 <div id="dispositons">
@@ -144,26 +146,36 @@
                                         </button>
                                     </div>
                                 </div>
-                                <div id="pausas">
-                                    <asp:DropDownList ID="ddlPausas" CssClass="browser-default blue darken-4 border-radius font-color-white mb-3" runat="server" />
-                                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 container-gap">
-                                        <button class="mdc-button mdc-button--raised green darken-4" id="btnPausa">
-                                            <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Enviar pausa</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
-                                        </button>
+                                <div id="ligacaoManual">
+                                    <button id="btnManualCallState" class="mdc-button mdc-button--raised blue darken-4 mb-5 mr-3" type="button">
+                                        <span class="mdc-button__ripple"></span>
+                                        <span class="mdc-button__label">Modo Manual</span>
+                                        <i class="material-icons mdc-button__icon" aria-hidden="true">dialpad</i>
+                                    </button>
 
-                                        <button class="mdc-button mdc-button--raised blue darken-4" id="btnRetornar" type="button">
-                                            <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Retornar pausa</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">flip_to_back</i>
-                                        </button>
+                                    <button id="btnManualCallEnd" class="mdc-button mdc-button--raised blue darken-4 mb-5" type="button">
+                                        <span class="mdc-button__ripple"></span>
+                                        <span class="mdc-button__label">Encerrar modo manual</span>
+                                        <i class="material-icons mdc-button__icon" aria-hidden="true">reply</i>
+                                    </button>
 
-                                        <button class="mdc-button mdc-button--raised blue darken-4" id="btnListarReasons">
-                                            <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Listar pausas</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">list_alt</i>
-                                        </button>
+                                    <div class="row d-flex align-items-center">
+                                        <div class="input-field filled-in col s3">
+                                            <input id="inputDdd" class="blue darken-4" maxlength="2" placeholder=" ">
+                                            <label for="inputDdd">DDD</label>
+                                        </div>
+
+                                        <div class="input-field filled-in col s6">
+                                            <input id="inputPhoneNumber" class="blue darken-4" maxlength="9" placeholder=" ">
+                                            <label for="inputPhoneNumber">Telefone</label>
+                                        </div>
+
+                                        <div class="input-field center-align">
+                                            <button class="mdc-fab green darken-4" id="btnCallRequest" type="button" aria-label="phone">
+                                                <span class="mdc-fab__ripple"></span>
+                                                <i class="material-icons mdc-fab__icon">phone</i>
+                                            </button>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

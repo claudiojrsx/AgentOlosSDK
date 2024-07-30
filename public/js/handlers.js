@@ -43,4 +43,6 @@ document.addEventListener("DOMContentLoaded", () => {
     addButtonEventListener("btnHangup", "hangupRequest");
     addButtonEventListener("btnSendDisposition", "listDispositions");
     addButtonEventListener("btnListarReasons", "listReasons");
+    addButtonEventListener("btnManualCallState", "manualCallMode");
+    addButtonEventListener("btnManualCallEnd", "endManualCallStateRequest");
 });
