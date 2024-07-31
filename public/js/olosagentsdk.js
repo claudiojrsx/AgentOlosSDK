@@ -8513,29 +8513,54 @@
 	const OlosAgent = (function () {
 		const agentWS = new olosagentsdk_umd.exports.OlosAgentWS();
 
-		const addrs = {
-			wsAgentCmd: "http://204.199.43.30:8082/WebAPIAgentControl/AgentCommand/",
-			wsAgentEvt: "http://204.199.43.30:8082/WebAPIAgentControl/AgentEvent/",
-			WsAgentCloud: "http://204.199.43.30:8082/WebAPIAgentControl/CloudAgent/",
-			wsMailingCmd: "http://204.199.43.30:8082/WebAPIMailingControl/MailingCommand/",
-			wsAgentConfig: "http://204.199.43.30:8082/WebAPIConfiguration/AgentConfig/",
-			wsVoiceSupport: "http://204.199.43.30:8082/WsVoiceSupportIntegration/WsVoiceSupportIntegration.asmx",
-			WebAPIAgentControl: "http://204.199.43.30:8082/WebAPIAgentControl/",
-			wsSoftphone: "http://204.199.43.30:8082/WebAPISoftphone/Softphone/",
-			wsMcx: "http://204.199.43.30:8082/WsMcx/wsmcx/Mcx/",
-			wsRecordingRetrieve: "http://204.199.43.30:8082/WebApiRecordingRetrieve/RecordTextComm/",
-		};
+		let baseURL;
+		let auth;
+		let addrs;
 
-		const auth = {
-			user: "api_token",
-			password: "olos@123",
-			clientID: "e9b9383e437b4bf284553c2f8af3ea82",
-			clientSecret: "MCZ0mUMHJp7ZL0bTGbY_FS8jQqhpH9mHFDmPP9jd8TQ",
-		};
+		function setBaseURL(url) {
+			baseURL = url;
+
+			addrs = {
+				wsAgentCmd: `${baseURL}/WebAPIAgentControl/AgentCommand/`,
+				wsAgentEvt: `${baseURL}/WebAPIAgentControl/AgentEvent/`,
+				WsAgentCloud: `${baseURL}/WebAPIAgentControl/CloudAgent/`,
+				wsMailingCmd: `${baseURL}/WebAPIMailingControl/MailingCommand/`,
+				wsAgentConfig: `${baseURL}/WebAPIConfiguration/AgentConfig/`,
+				wsVoiceSupport: `${baseURL}/WsVoiceSupportIntegration/WsVoiceSupportIntegration.asmx`,
+				WebAPIAgentControl: `${baseURL}/WebAPIAgentControl/`,
+				wsSoftphone: `${baseURL}/WebAPISoftphone/Softphone/`,
+				wsMcx: `${baseURL}/WsMcx/wsmcx/Mcx/`,
+				wsRecordingRetrieve: `${baseURL}/WebApiRecordingRetrieve/RecordTextComm/`,
+			};
+		}
+
+		function setAuth(apiToken, password, clientID, clientSecret) {
+			auth = {
+				user: apiToken,
+				password: password,
+				clientID: clientID,
+				clientSecret: clientSecret
+			};
+		}
 
 		const jsLogger = true;
 
 		function authenticatedOlos(agentLogin, agentPassword) {
+			if (!baseURL) {
+				console.error("Base URL não foi configurado.");
+				return;
+			}
+
+			if (!auth) {
+				console.error("Auth não foi configurado.");
+				return;
+			}
+
+			if (!addrs) {
+				console.error("Endereços não foram configurados.");
+				return;
+			}
+
 			olosagentsdk_umd.exports.createOlos(addrs, auth, jsLogger);
 
 			agentWS.agentAuthentication(agentLogin, agentPassword, (callback) => {
@@ -8563,8 +8588,6 @@
 
 		var globalCampaignIdAtiva = null;
 		var globalCampaignIdReceptiva = null;
-		var dddGlobal = null;
-		var phoneNumberGlobal = null;
 		var globalCallId = null;
 		var globalCampaignId = null;
 		var globalDispositionCode = null;
@@ -8613,7 +8636,7 @@
 				var reasonId = $('#ddlPausas').val();
 				$.ajax({
 					type: 'POST',
-					url: '/OlosAgentAuthenticated.aspx/GetReasonId',
+					url: '/Utils/Utilities.aspx/GetReasonId',
 					data: JSON.stringify({ reasonId: reasonId }),
 					contentType: 'application/json; charset=utf-8',
 					dataType: 'json',
@@ -8653,7 +8676,7 @@
 				var dispositionCode = $('#ddlDispositions').val();
 				$.ajax({
 					type: "POST",
-					url: "/OlosAgentAuthenticated.aspx/GetDispositionCode",
+					url: "/Utils/Utilities.aspx/GetDispositionCode",
 					data: JSON.stringify({ dispositionCode: dispositionCode }),
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
@@ -8678,7 +8701,7 @@
 		$(document).ready(function () {
 			function checkScreenPop() {
 				$.ajax({
-					url: "OlosAgentAuthenticated.aspx/CheckScreenPop",
+					url: "/Pages/Screenpop.aspx/CheckScreenPop",
 					type: "POST",
 					contentType: "application/json; charset=utf-8",
 					dataType: "json",
@@ -8790,7 +8813,7 @@
 
 		function GetReceptivaCampaignId(screenPop) {
 			$.ajax({
-				url: '/OlosAgentAuthenticated.aspx/GetReceptivaCampaignId',
+				url: '/Pages/Screenpop.aspx/GetReceptivaCampaignId',
 				type: 'POST',
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify({ screenPop: screenPop }),
@@ -8808,7 +8831,7 @@
 
 		function callAgentIdWebMethod(agentId) {
             $.ajax({
-				url: '/OlosAgentAuthenticated.aspx/AgentId',
+				url: '/Utils/Utilities.aspx/AgentId',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({ agentId: agentId }),
@@ -8824,7 +8847,7 @@
 
 		function callPassCodeWebMethod(passCode) {
 			$.ajax({
-				url: '/OlosAgentAuthenticated.aspx/PassCode',
+				url: '/Utils/Utilities.aspx/PassCode',
 				type: 'POST',
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify({ passCode: passCode }),
@@ -8840,7 +8863,7 @@
 
 		function callEnviarPassCode(passCode) {
 			$.ajax({
-				url: '/OlosAgentAuthenticated.aspx/PassCode',
+				url: '/Utils/Utilities.aspx/PassCode',
 				type: 'POST',
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify({ passCode: passCode }),
@@ -8856,7 +8879,7 @@
 
         function callScreenPop(screenPop) {
             $.ajax({
-                url: '/OlosAgentAuthenticated.aspx/ScreenPop',
+                url: '/Pages/Screepop.aspx/ScreenPop',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({ screenPop: screenPop }),
@@ -8892,7 +8915,7 @@
 
         function sendListReasons(reasons) {
             $.ajax({
-                url: '/OlosAgentAuthenticated.aspx/GetListReasons',
+				url: '/Utils/Utilities.aspx/GetListReasons',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({ reasons: reasons }),
@@ -8917,7 +8940,7 @@
 
 			function sendListDispositions(dispositions) {
 				$.ajax({
-					url: '/OlosAgentAuthenticated.aspx/GetListDispositions',
+					url: '/Utils/Utilities.aspx/GetListDispositions',
 					type: 'POST',
 					contentType: 'application/json; charset=utf-8',
 					data: JSON.stringify({ dispositions: dispositions }),
@@ -8978,7 +9001,7 @@
 
 		function sendChangeStatus(changestatus) {
 			$.ajax({
-				url: '/OlosAgentAuthenticated.aspx/ChangeStatus',
+				url: '/Utils/Utilities.aspx/ChangeStatus',
 				type: 'POST',
 				contentType: 'application/json; charset=utf-8',
 				data: JSON.stringify({ changestatus: changestatus }),
@@ -9108,7 +9131,9 @@
 			sendChangeStatus,
 			checkLoginCampaign,
 			manualCallMode,
-			endManualCallStateRequest
+			endManualCallStateRequest,
+			setBaseURL,
+			setAuth
 		};
 	})();
 

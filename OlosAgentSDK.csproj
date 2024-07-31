@@ -116,6 +116,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Pages\Logincampaign.aspx" />
+    <Content Include="Pages\Screenpop.aspx" />
     <Content Include="Pages\SendManualCallRequest.aspx" />
     <Content Include="OlosAgentAuthenticated.aspx" />
     <Content Include="public\css\materialize-1.0.0\materialize.min.css" />
@@ -142,11 +143,12 @@
     <Content Include="public\material-design\material-components-web.css" />
     <Content Include="public\material-design\material-components-web.min.css" />
     <Content Include="public\material-design\material-icons.css" />
-    <Content Include="public\olos-laranja.png" />
+    <Content Include="public\logo\olos.png" />
     <Content Include="Scripts\jquery-3.7.1.js" />
     <Content Include="Scripts\jquery-3.7.1.min.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.js" />
     <Content Include="Scripts\jquery-3.7.1.slim.min.js" />
+    <Content Include="Utils\Utilities.aspx" />
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
@@ -157,6 +159,13 @@
     </Compile>
     <Compile Include="Pages\Logincampaign.aspx.designer.cs">
       <DependentUpon>Logincampaign.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Screenpop.aspx.cs">
+      <DependentUpon>Screenpop.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Pages\Screenpop.aspx.designer.cs">
+      <DependentUpon>Screenpop.aspx</DependentUpon>
     </Compile>
     <Compile Include="Pages\SendManualCallRequest.aspx.cs">
       <DependentUpon>SendManualCallRequest.aspx</DependentUpon>
@@ -176,6 +185,13 @@
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Startup.cs" />
+    <Compile Include="Utils\Utilities.aspx.cs">
+      <DependentUpon>Utilities.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Utils\Utilities.aspx.designer.cs">
+      <DependentUpon>Utilities.aspx</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
