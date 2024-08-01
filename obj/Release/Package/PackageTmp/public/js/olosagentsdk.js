@@ -8757,7 +8757,7 @@
                 });
             }
 
-            setInterval(checkManualCallDisposition, 5000)
+            setInterval(checkManualCallDisposition, 1000)
         });
 
 		$(document).ready(function () {
@@ -8808,7 +8808,7 @@
 				});
 			}
 
-			setInterval(checkManualCall, 3000);
+			setInterval(checkManualCall, 1000);
 		});
 
 		function GetReceptivaCampaignId(screenPop) {

@@ -16,57 +16,66 @@ namespace OlosAgentSDK
 
             try
             {
-                string agentLogin = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["A"])).Replace("ñ", "1");
-                string agentPassword = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["B"])).Replace("ñ", "1");
-                string dbServerIp = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["C"])).Replace("ñ", "1");
-                string dbName = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["D"])).Replace("ñ", "1");
-                string dbLogin = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["E"])).Replace("ñ", "1");
-                string dbPassword = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["F"])).Replace("ñ", "1");
-                string dbPort = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["G"])).Replace("ñ", "1");
-                string idUsuario = funcoes.COBCRPTO(HttpUtility.UrlDecode(Request.QueryString["H"])).Replace("ñ", "1");
+                string agentLogin = GetDecodedQueryString("A");
+                string agentPassword = GetDecodedQueryString("B");
+                string dbServerIp = GetDecodedQueryString("C");
+                string dbName = GetDecodedQueryString("D");
+                string dbLogin = GetDecodedQueryString("E");
+                string dbPassword = GetDecodedQueryString("F");
+                string dbPort = GetDecodedQueryString("G");
+                string idUsuario = GetDecodedQueryString("H");
 
+                if (string.IsNullOrEmpty(agentLogin) || string.IsNullOrEmpty(agentPassword) || string.IsNullOrEmpty(idUsuario))
+                {
+                    Response.Write("Error: Parâmetros inválidos ou ausentes.");
+                    return;
+                }
+
+                // Definir sessão do usuário
                 funcoes.SetSession("idUsuario", idUsuario);
 
-                funcoes.Connection(
-                    dbServerIp,
-                    dbName,
-                    dbLogin,
-                    dbPassword,
-                    null,
-                    null,
-                    dbPort);
+                funcoes.Connection(dbServerIp, dbName, dbLogin, dbPassword, null, null, dbPort);
 
-                if (!string.IsNullOrEmpty(agentLogin) && !string.IsNullOrEmpty(agentPassword))
+                var parameters = funcoes.ValoresSQL2($@"
+                SELECT  BASE_URL = BB.SERV_AUDIO,
+                        SERVIDOR = BB.SERVIDOR,
+                        API_TOKEN = BB.SERV_USU,
+                        PASSWORD = BB.SERV_SENHA,
+                        CLIENTID = BB.DISC_LOGIN,
+                        CLIENTSECRET = BB.DISC_SENHA
+                FROM    USU_MASTER AA (NOLOCK)
+                JOIN    DISC_MASTER BB (NOLOCK) ON BB.ID_DISC_MASTER = AA.ID_DISC_MASTER
+                JOIN    USU_DISC CC (NOLOCK) ON CC.ID_DISC_MASTER = BB.ID_DISC_MASTER
+                JOIN    DISC_CAD DD (NOLOCK) ON DD.ID_DISCADOR = BB.ID_DISCADOR
+                WHERE   DD.DESCR = 'OLOS API'
+                AND     AA.ID_USUARIO = {idUsuario}");
+
+                if (parameters.Count == 0)
                 {
-                    var parameters = funcoes.ValoresSQL2($@"
-                    SELECT	BASE_URL = BB.SERV_AUDIO,
-                            SERVIDOR = BB.SERVIDOR,
-		                    API_TOKEN = BB.SERV_USU,
-		                    PASSWORD = BB.SERV_SENHA,
-		                    CLIENTID = BB.DISC_LOGIN,
-		                    CLIENTSECRET = BB.DISC_SENHA
-                    FROM	USU_MASTER AA (NOLOCK)
-                    JOIN	DISC_MASTER BB (NOLOCK) ON BB.ID_DISC_MASTER = AA.ID_DISC_MASTER
-                    JOIN	USU_DISC CC (NOLOCK) ON CC.ID_DISC_MASTER = BB.ID_DISC_MASTER
-                    JOIN	DISC_CAD DD (NOLOCK) ON DD.ID_DISCADOR = BB.ID_DISCADOR
-                    WHERE	DD.DESCR = 'OLOS API'
-                    AND		AA.ID_USUARIO = {idUsuario}");
-
-                    string baseURL = parameters["BASE_URL"][0].ToString();
-                    string apiToken = parameters["API_TOKEN"][0].ToString();
-                    string password = funcoes.COBCRPTO(parameters["PASSWORD"][0].ToString()).Replace("ñ", "1");
-                    string clientID = parameters["CLIENTID"][0].ToString();
-                    string clientSecret = parameters["CLIENTSECRET"][0].ToString();
-
-                    funcoes.js($"OlosAgent.setBaseURL('{baseURL}');", this);
-                    funcoes.js($"OlosAgent.setAuth('{apiToken}', '{password}', '{clientID}', '{clientSecret}');", this);
-                    funcoes.js($"OlosAgent.authenticatedOlos('{agentLogin}', '{agentPassword}');", this);
+                    Response.Write("Error: Configurações da API não encontradas.");
+                    return;
                 }
+
+                string baseURL = parameters["BASE_URL"][0].ToString();
+                string apiToken = parameters["API_TOKEN"][0].ToString();
+                string password = funcoes.COBCRPTO(parameters["PASSWORD"][0].ToString()).Replace("ñ", "1");
+                string clientID = parameters["CLIENTID"][0].ToString();
+                string clientSecret = parameters["CLIENTSECRET"][0].ToString();
+
+                funcoes.js($"OlosAgent.setBaseURL('{baseURL}');", this);
+                funcoes.js($"OlosAgent.setAuth('{apiToken}', '{password}', '{clientID}', '{clientSecret}');", this);
+                funcoes.js($"OlosAgent.authenticatedOlos('{agentLogin}', '{agentPassword}');", this);
             }
             catch (Exception ex)
             {
-                Response.Write($"Error: {ex.Message}");
+                Response.Write("Ocorreu um erro ao processar sua solicitação: " + ex.Message);
             }
+        }
+
+        private string GetDecodedQueryString(string key)
+        {
+            string value = Request.QueryString[key];
+            return value != null ? funcoes.COBCRPTO(HttpUtility.UrlDecode(value)).Replace("ñ", "1") : string.Empty;
         }
     }
 }

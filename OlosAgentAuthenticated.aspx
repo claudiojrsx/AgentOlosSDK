@@ -27,7 +27,7 @@
     <link href="public/material-design-snackbar/mdc.snackbar.min.css" rel="stylesheet" />
     <link href="public/css/styles.css" rel="stylesheet">
 
-    <title>OLOS</title>
+    <title>Integração Olos</title>
     <link rel="icon" type="image/x-icon" href="public/favicon.png" />
 </head>
 

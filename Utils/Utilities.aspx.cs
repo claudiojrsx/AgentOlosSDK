@@ -105,8 +105,7 @@ namespace OlosAgentSDK.Utils
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Erro ao processar evento: {ex.Message}");
-                throw;
+                return $"Erro ao processar evento: {ex.Message}";
             }
         }
 
@@ -124,7 +123,7 @@ namespace OlosAgentSDK.Utils
             }
             catch (Exception ex)
             {
-                return "Erro: " + ex.Message;
+                return $"Erro: {ex.Message}";
             }
         }
     }

@@ -8583,6 +8583,18 @@
 					callScreenPop(payload);
 					GetReceptivaCampaignId(payload);
 				});
+
+				olosagentsdk_umd.exports.olosOn("ChangeManualCallState", (payload) => {
+					sendChangeManualCallState(payload);
+					console.log(`Evento ChangeManualCallState ouvido: ${JSON.stringify(payload)}`);
+					showSnackbar(`Evento ChangeManualCallState ouvido: ${JSON.stringify(payload)}`);
+				});
+
+				olosagentsdk_umd.exports.olosOn("changestatus", (payload) => {
+					sendChangeStatus(payload);
+					console.log(`Evento Changestatus ouvido: ${JSON.stringify(payload)}`);
+					showSnackbar(`Evento Changestatus ouvido: ${JSON.stringify(payload)}`);
+				});
 			});
 		}
 
@@ -8699,68 +8711,6 @@
 		});
 
 		$(document).ready(function () {
-			function checkScreenPop() {
-				$.ajax({
-					url: "/Pages/Screenpop.aspx/CheckScreenPop",
-					type: "POST",
-					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: function (response) {
-						if (response.d) {
-							globalDispositionCode = response.d;
-							console.log("Valor encontrado: " + response.d);
-						} else {
-							globalDispositionCode = null;
-						}
-
-						if (globalDispositionCode && globalDispositionCode.trim() !== "") {
-							OlosAgent.hangupAndDispositionCallByCode(globalDispositionCode);
-
-							globalDispositionCode = null;
-						}
-					},
-					error: function (error) {
-						console.log("Erro na requisição: " + error);
-					}
-				});
-			}
-
-			setInterval(checkScreenPop, 1000);
-		});
-
-		// Função para realizar a tabulação e finalizar o Status de ManualCall para Livre.
-        $(document).ready(function () {
-            function checkManualCallDisposition() {
-                $.ajax({
-                    url: "/Pages/SendManualCallRequest.aspx/CheckManualCallDisposition",
-                    type: "POST",
-                    contentType: "application/json; charset=utf-8",
-                    dataType: "json",
-                    success: function (response) {
-                        if (response.d) {
-                            console.log('CodFim armazenado: ' + response.d);
-
-							globalManualCodFim = response.d;
-
-							if (globalManualCodFim !== "") {
-								agentWS.dispositionCallByCode(globalManualCodFim);
-								agentWS.endManualCallStateRequest();
-								showSnackbar('Ligação manual encerrada com sucesso!');
-
-								globalManualCodFim = null;
-							}
-                        }
-                    },
-                    error: function (error) {
-                        console.log("Erro na requisição: " + error);
-                    }
-                });
-            }
-
-            setInterval(checkManualCallDisposition, 5000)
-        });
-
-		$(document).ready(function () {
 			$('#btnCallRequest').click(function () {
 				var dddGlobal = $('#inputDdd').val();
 				var phoneNumberGlobal = $('#inputPhoneNumber').val();
@@ -8793,11 +8743,11 @@
 							globalCobDDD = data.DDD;
 							globalCobPhoneNumber = data.TELEFONE;
 
-                            if (globalCobDDD && globalCobPhoneNumber) {
-                                console.log("Chamada manual iniciada pelo usuário.");
-                                agentWS.manualCallStateRequest();
-                                agentWS.sendManualCallRequest(globalCobDDD, globalCobPhoneNumber, globalCampaignIdAtiva);
-                            }
+							if (globalCobDDD && globalCobPhoneNumber) {
+								console.log("Chamada manual iniciada pelo usuário.");
+								agentWS.manualCallStateRequest();
+								agentWS.sendManualCallRequest(globalCobDDD, globalCobPhoneNumber, globalCampaignIdAtiva);
+							}
 						} else {
 							console.log("Nenhum valor encontrado.");
 						}
@@ -8809,6 +8759,68 @@
 			}
 
 			setInterval(checkManualCall, 3000);
+		});
+
+		// Função para realizar a tabulação e finalizar o Status de ManualCall para Livre.
+        $(document).ready(function () {
+            function checkManualCallDisposition() {
+                $.ajax({
+                    url: "/Pages/SendManualCallRequest.aspx/CheckManualCallDisposition",
+                    type: "POST",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (response) {
+                        if (response.d) {
+                            console.log('CodFim armazenado: ' + response.d);
+
+							globalManualCodFim = response.d;
+
+							if (globalManualCodFim !== "") {
+								agentWS.dispositionCallByCode(globalManualCodFim);
+								agentWS.endManualCallStateRequest();
+								showSnackbar('Ligação manual encerrada com sucesso!');
+
+								globalManualCodFim = null;
+							}
+                        }
+                    },
+                    error: function (error) {
+                        console.log("Erro na requisição: " + error);
+                    }
+                });
+            }
+
+            setInterval(checkManualCallDisposition, 3000)
+		});
+
+		$(document).ready(function () {
+			function checkScreenPop() {
+				$.ajax({
+					url: "/Pages/Screenpop.aspx/CheckScreenPop",
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: function (response) {
+						if (response.d) {
+							globalDispositionCode = response.d;
+							console.log("Valor encontrado: " + response.d);
+						} else {
+							globalDispositionCode = null;
+						}
+
+						if (globalDispositionCode && globalDispositionCode.trim() !== "") {
+							OlosAgent.hangupAndDispositionCallByCode(globalDispositionCode);
+
+							globalDispositionCode = null;
+						}
+					},
+					error: function (error) {
+						console.log("Erro na requisição: " + error);
+					}
+				});
+			}
+
+			setInterval(checkScreenPop, 1000);
 		});
 
 		function GetReceptivaCampaignId(screenPop) {
@@ -8959,17 +8971,7 @@
 		});
 
 		/*Eventos olosOn*/
-		olosagentsdk_umd.exports.olosOn("ChangeManualCallState", (payload) => {
-			sendChangeManualCallState(payload);
-			console.log(`Evento ChangeManualCallState ouvido: ${JSON.stringify(payload)}`);
-			showSnackbar(`Evento ChangeManualCallState ouvido: ${JSON.stringify(payload)}`);
-		});
 
-        olosagentsdk_umd.exports.olosOn("changestatus", (payload) => {
-            sendChangeStatus(payload);
-            console.log(`Evento Changestatus ouvido: ${JSON.stringify(payload)}`);
-            showSnackbar(`Evento Changestatus ouvido: ${JSON.stringify(payload)}`);
-        });
 
 		/*Funções*/
 		function sendChangeManualCallState(changeManualCallState) {

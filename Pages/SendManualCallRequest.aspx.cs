@@ -116,11 +116,13 @@ namespace OlosAgentSDK.Pages
 
                     string ID_DISCADOR = func.ValorSQL($@"SELECT TOP 1 DC.ID_DISCADOR FROM DISC_CAD DC (NOLOCK) WHERE DC.DESCR = 'OLOS API'");
                     string ID_USUARIO = func.GetSession("idUsuario", "0").ToString();
-                    string ID_LIGACAO = func.GetSession("ManualCallId", "0").ToString();
+                    string ID_LIGACAO = changeManualCallState.callId.ToString();
                     string CPF_CNPJ = func.GetSession("CPF_CNPJ", "0").ToString();
                     string DDD = func.GetSession("DDD", "0").ToString();
                     string TELEFONE = func.GetSession("TELEFONE", "0").ToString();
                     string ID_DISC_CAMPANHA = func.GetSession("CampaignIdAtiva", "0").ToString();
+
+                    func.SetSession("ID_LIGACAO", ID_LIGACAO);
 
                     string sql = $@"SELECT TOP 1 1 
                                 FROM   POPUPcob (NOLOCK) 
@@ -170,12 +172,12 @@ namespace OlosAgentSDK.Pages
 
             try
             {
-                if (func.GetSession("ManualCallId", "0") != null)
+                if (func.GetSession("ID_LIGACAO", "Não foi retornado nenhum callId") != null)
                 {
                     string query = func.ValorSQL($@"
                     SELECT  COD_FIM
                     FROM    POPUPcob (NOLOCK) 
-                    WHERE   ID_LIGACAO = {func.GetSession("ManualCallId", "0")}
+                    WHERE   ID_LIGACAO = {func.GetSession("ID_LIGACAO", "Não foi retornado nenhum callId")}
                     AND     CPF_CNPJ = '{func.GetSession("CPF_CNPJ", "0")}'
                     AND     DDD = '{func.GetSession("DDD", "0")}'
                     AND     TELEFONE = '{func.GetSession("TELEFONE", "0")}'
@@ -187,7 +189,7 @@ namespace OlosAgentSDK.Pages
                         func.ValorSQL($@"
                         DELETE FROM POPUPcob
                         WHERE COD_FIM = '{query}'
-                        AND ID_LIGACAO = {func.GetSession("ManualCallId", "0")}");
+                        AND ID_LIGACAO = {func.GetSession("ID_LIGACAO", "Não foi retornado nenhum callId")}");
                     }
 
                     return query;
