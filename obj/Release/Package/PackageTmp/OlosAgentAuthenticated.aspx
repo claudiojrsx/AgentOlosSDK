@@ -94,7 +94,6 @@
                                     <button class="mdc-button mdc-button--filled blue darken-4" disabled="disabled">
                                         <p id="campaignIdReceptiva"></p>
                                     </button>
-
                                 </div>
                             </div>
                             <div class="card-tabs">

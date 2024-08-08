@@ -69,12 +69,6 @@ namespace OlosAgentSDK.Utils
         }
 
         [WebMethod]
-        public static string GetReasonId(string reasonId)
-        {
-            return $"Pausa solicitada com o motivo ID: {reasonId}";
-        }
-
-        [WebMethod]
         public static string AgentId(string agentId)
         {
             try

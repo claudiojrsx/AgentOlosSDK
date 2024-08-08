@@ -38,7 +38,6 @@ document.addEventListener("DOMContentLoaded", () => {
             window.close();
         }, 3000);
     });
-    addButtonEventListener("btnPausa", "agentReasonRequest");
     addButtonEventListener("btnRetornar", "agentIdleRequest");
     addButtonEventListener("btnHangup", "hangupRequest");
     addButtonEventListener("btnSendDisposition", "listDispositions");

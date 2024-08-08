@@ -66,8 +66,8 @@
             </div>
         </header>
 
-        <section style="padding-top: 100px;">
-            <div class="container">
+        <section class="pt-6">
+            <div class="container pb-6 pt-6">
                 <div class="row">
                     <div class="col s12">
                         <div class="card card-border blue darken-3">
@@ -94,7 +94,6 @@
                                     <button class="mdc-button mdc-button--filled blue darken-4" disabled="disabled">
                                         <p id="campaignIdReceptiva"></p>
                                     </button>
-
                                 </div>
                             </div>
                             <div class="card-tabs">
@@ -108,7 +107,7 @@
                                 <div id="pausas">
                                     <asp:DropDownList ID="ddlPausas" CssClass="browser-default blue darken-4 border-radius font-color-white mb-3" runat="server" />
                                     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 container-gap">
-                                        <button class="mdc-button mdc-button--raised green darken-4" id="btnPausa">
+                                        <button class="mdc-button mdc-button--raised green darken-4" id="btnPausa" type="button">
                                             <span class="mdc-button__ripple"></span>
                                             <span class="mdc-button__label">Enviar pausa</span>
                                             <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>

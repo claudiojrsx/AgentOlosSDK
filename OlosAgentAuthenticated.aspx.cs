@@ -9,6 +9,12 @@ namespace OlosAgentSDK
     {
         private static readonly Funcoes funcoes = new Funcoes();
 
+        private string GetDecodedQueryString(string key)
+        {
+            string value = Request.QueryString[key];
+            return value != null ? funcoes.COBCRPTO(HttpUtility.UrlDecode(value)).Replace("ñ", "1") : string.Empty;
+        }
+
         protected void Page_Load(object sender, EventArgs e)
         {
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
@@ -70,12 +76,6 @@ namespace OlosAgentSDK
             {
                 Response.Write("Ocorreu um erro ao processar sua solicitação: " + ex.Message);
             }
-        }
-
-        private string GetDecodedQueryString(string key)
-        {
-            string value = Request.QueryString[key];
-            return value != null ? funcoes.COBCRPTO(HttpUtility.UrlDecode(value)).Replace("ñ", "1") : string.Empty;
         }
     }
 }
