@@ -8601,12 +8601,37 @@
 		var globalCampaignIdAtiva = null;
 		var globalCampaignIdReceptiva = null;
 		var globalCallId = null;
+		var globalCallIdAtiva = null;
+		var callIdSource = null; // Flag para identificar a origem do callId
 		var globalCampaignId = null;
 		var globalDispositionCode = null;
 		var globalManualCodFim = null;
-
 		var globalCobDDD = null;
 		var globalCobPhoneNumber = null;
+
+		// Interações automáticas assim que abre a página.
+		$(document).ready(function () {
+			function updateConnections() {
+				$.ajax({
+					url: "/Utils/Utilities.aspx/GetActiveConnectionsMethod",
+					type: "POST",
+					contentType: "application/json; charset=utf-8",
+					dataType: "json",
+					success: function (response) {
+						var data = JSON.parse(response.d);
+
+						$("#lblActiveConnections").text("Conexões ativas: " + data.connections);
+					},
+					failure: function (response) {
+						console.log("Erro ao buscar conexões ativas: " + response);
+					}
+				});
+			}
+
+			setInterval(updateConnections, 5000);
+
+			updateConnections();
+		});
 
 		$(document).ready(function () {
 			$('#btnCallRequest').click(function () {
@@ -8619,56 +8644,13 @@
 				if (globalCampaignIdAtiva) {
 					sendManualCallRequest(dddGlobal, phoneNumberGlobal, globalCampaignIdAtiva, true);
 					console.log(`Ligação manual efetivada com sucesso: ${dddGlobal}, ${phoneNumberGlobal}, ${globalCampaignIdAtiva}`);
-					showSnackbar(`Ligação manual efetivada com sucesso: ${dddGlobal}, ${phoneNumberGlobal}, ${globalCampaignIdAtiva}`);
+					showSnackbar(`Sucesso: ${dddGlobal}, ${phoneNumberGlobal}, ${globalCampaignIdAtiva}`);
 				} else {
 					console.error('CampaignId não disponível. Certifique-se de que callGetCampaignId foi chamado e completado com sucesso.');
 					showSnackbar('CampaignId não disponível. Certifique-se de que callGetCampaignId foi chamado e completado com sucesso.');
 				}
 			});
-		});
-
-		$(document).ready(function () {
-			$('#btnPausa').prop('disabled', true);
-			$('#btnRetornar').prop('disabled', true);
-
-			$('#ddlPausas').change(function () {
-				var reasonId = $(this).val();
-				console.log("Selected reasonId: ", reasonId);
-
-				if (reasonId) {
-					$('#btnPausa').prop('disabled', false);
-					$('#btnRetornar').prop('disabled', false);
-				} else {
-					$('#btnPausa').prop('disabled', true);
-					$('#btnRetornar').prop('disabled', true);
-				}
-			});
-
-			$('#btnPausa').click(function () {
-				var reasonId = $('#ddlPausas').val();
-				$.ajax({
-					type: 'POST',
-					url: '/Utils/Utilities.aspx/GetReasonId',
-					data: JSON.stringify({ reasonId: reasonId }),
-					contentType: 'application/json; charset=utf-8',
-					dataType: 'json',
-					success: function (response) {
-						if (response.d) {
-							console.log('Request success: ', response.d);
-							OlosAgent.agentReasonRequest(reasonId);
-							console.log(`Pausa enviada com sucesso: ${reasonId}`);
-							showSnackbar(`Pausa enviada com sucesso: ${reasonId}`);
-						} else {
-							console.error('Request failed: ', response);
-							showSnackbar('Request failed: ', response);
-						}
-					},
-					error: function (error) {
-						console.error('Request failed: ', error);
-					}
-				});
-			});
-		});
+		});	
 
 		$(document).ready(function () {
 			$('#btnThrowDisposition').prop('disabled', true);
@@ -8697,7 +8679,7 @@
 							console.log("Disposition Code: ", response.d);
 							OlosAgent.hangupAndDispositionCallByCode(dispositionCode);
 							console.log(`Disposition Code enviado com sucesso: ${dispositionCode}.`);
-							showSnackbar(`Disposition Code enviado com sucesso: ${dispositionCode}.`);
+							showSnackbar(`Sucesso: ${dispositionCode}.`);
 						} else {
 							console.error("Request failed: ", response);
 							showSnackbar("Request failed: ", response);
@@ -8745,7 +8727,11 @@
 
 							if (globalCobDDD && globalCobPhoneNumber) {
 								console.log("Chamada manual iniciada pelo usuário.");
-								agentWS.manualCallStateRequest();
+
+								setTimeout(() => {
+									agentWS.manualCallStateRequest();
+								}, 1000);
+
 								agentWS.sendManualCallRequest(globalCobDDD, globalCobPhoneNumber, globalCampaignIdAtiva);
 							}
 						} else {
@@ -8758,7 +8744,7 @@
 				});
 			}
 
-			setInterval(checkManualCall, 3000);
+			setInterval(checkManualCall, 1000);
 		});
 
 		// Função para realizar a tabulação e finalizar o Status de ManualCall para Livre.
@@ -8776,9 +8762,13 @@
 							globalManualCodFim = response.d;
 
 							if (globalManualCodFim !== "") {
+
 								agentWS.dispositionCallByCode(globalManualCodFim);
-								agentWS.endManualCallStateRequest();
-								showSnackbar('Ligação manual encerrada com sucesso!');
+								
+								setTimeout(() => {
+									agentWS.endManualCallStateRequest();
+									showSnackbar('Sucesso');
+								}, 1000);
 
 								globalManualCodFim = null;
 							}
@@ -8790,9 +8780,10 @@
                 });
             }
 
-            setInterval(checkManualCallDisposition, 3000)
+            setInterval(checkManualCallDisposition, 1000)
 		});
 
+		// Interação responsável por realizar a tabulação no COBweb.
 		$(document).ready(function () {
 			function checkScreenPop() {
 				$.ajax({
@@ -8823,6 +8814,36 @@
 			setInterval(checkScreenPop, 1000);
 		});
 
+		$(document).ready(function () {
+			$('#btnPausa').prop('disabled', true);
+			$('#btnRetornar').prop('disabled', true);
+
+			$('#ddlPausas').change(function () {
+				var reasonCode = $(this).val();
+				console.log("Selected reasonCode: ", reasonCode);
+
+				if (reasonCode) {
+					$('#btnPausa').prop('disabled', false);
+					$('#btnRetornar').prop('disabled', false);
+				} else {
+					$('#btnPausa').prop('disabled', true);
+					$('#btnRetornar').prop('disabled', true);
+				}
+			});
+
+			$('#btnPausa').click(function () {
+				var reasonCode = $('#ddlPausas').val();
+
+				if (reasonCode) {
+					agentWS.agentReasonRequestByCode(reasonCode, (responseCode) => {
+						console.log(`Agent request pause: ${responseCode}`);
+						showSnackbar(`Sucesso: ${responseCode}`);
+					});
+				}
+			});
+		});
+
+		// Functions
 		function GetReceptivaCampaignId(screenPop) {
 			$.ajax({
 				url: '/Pages/Screenpop.aspx/GetReceptivaCampaignId',
@@ -8891,7 +8912,7 @@
 
         function callScreenPop(screenPop) {
             $.ajax({
-                url: '/Pages/Screepop.aspx/ScreenPop',
+                url: '/Pages/Screenpop.aspx/ScreenPop',
                 type: 'POST',
                 contentType: 'application/json; charset=utf-8',
                 data: JSON.stringify({ screenPop: screenPop }),
@@ -8901,7 +8922,9 @@
 
                     if (screenPop && screenPop.callId && screenPop.campaignId) {
                         globalCallId = screenPop.callId;
-                        globalCampaignId = screenPop.campaignId;
+						globalCampaignId = screenPop.campaignId;
+						callIdSource = 'callScreenPop';
+
                         console.log('callId armazenado:', globalCallId);
                         console.log('campaignId armazenado:', globalCampaignId);
                     } else {
@@ -8970,10 +8993,6 @@
 			}
 		});
 
-		/*Eventos olosOn*/
-
-
-		/*Funções*/
 		function sendChangeManualCallState(changeManualCallState) {
 			$.ajax({
 				url: '/Pages/SendManualCallRequest.aspx/ChangeManualCallState',
@@ -8985,6 +9004,9 @@
 					console.log('changeManualCallState ouvido com sucesso: ', response);
 
 					if (changeManualCallState && changeManualCallState.callId) {
+						globalCallIdAtiva = changeManualCallState.callId;
+						callIdSource = 'sendChangeManualCallState';
+
 						console.log('callId armazenado com sucesso: ' + changeManualCallState.callId);
 						console.log('callState armazenado com sucesso: ' + changeManualCallState.callState);
 
@@ -9051,59 +9073,81 @@
 			});
 		}
 
-		function agentReasonRequest(reasonId) {
-			agentWS.agentReasonRequest(reasonId, (reasonId) => {
-				console.log(`Agent request pause: ${reasonId}`);
-				showSnackbar(`Pausa solicitada com sucesso: ${reasonId}`);
-			});
-		}
-
+		// Função responsável por realizar a tabulação de ligações manuais e receptivas.
 		function hangupAndDispositionCallByCode(dispositionCode) {
-			agentWS.hangupAndDispositionCallByCode(dispositionCode, (dispositionCode) => {
-				console.log(`Agent request dispositionCode: ${dispositionCode}`);
-			});
+			if (callIdSource === 'sendChangeManualCallState') {
+				agentWS.hangupAndDispositionCallByCode(dispositionCode, (dispositionCode) => {
+					console.log(`Agent request dispositionCode: ${dispositionCode}`);
+				});
+
+				setTimeout(() => {
+					agentWS.endManualCallStateRequest();
+					showSnackbar('Sucesso');
+				}, 1000);
+			} else if (callIdSource === 'callScreenPop') {
+				agentWS.hangupAndDispositionCallByCode(dispositionCode, (dispositionCode) => {
+					console.log(`Agent request dispositionCode: ${dispositionCode}`);
+				});
+			} else {
+				showSnackbar('Erro: Erro ao finalizar a tabulação.');
+			}
 		}
 
 		function agentIdleRequest() {
 			agentWS.agentIdleRequest();
 		}
 
-		function listDispositions() {
-			if (globalCampaignId) {
-				agentWS.listDispositions(globalCampaignId, (result) => {
-					console.log(`Lista de dispositions: ${result}`);
-					globalCampaignId = null;
+        function listDispositions() {
+            if (callIdSource === 'sendChangeManualCallState') {
+                agentWS.listDispositions(globalCampaignIdAtiva, (result) => {
+                    console.log(`Lista de dispositions: ${result}`);
+                });
+            } else if (callIdSource === 'callScreenPop') {
+                agentWS.listDispositions(globalCampaignIdReceptiva, (result) => {
+                    console.log(`Lista de dispositions: ${result}`);
 				});
-			} else {
-				console.error('Nenhum campaignId armazenado para listar as dispositions');
-				showSnackbar('Nenhum campaignId armazenado para listar as dispositions');
-			}
-		}
+            } else {
+                console.error('Erro ao listar as dispositions');
+                showSnackbar('Erro: Verifique o CampaignID do usuário.');
+            }
+        }
 
 		function agentLogout() {
 			agentWS.agentLogout();
 		}
 
-		function hangupRequest() {
-			if (globalCallId) {
-				agentWS.hangupRequest(globalCallId, (callId) => {
-					console.log(`Ligação finalizada com sucesso: ${callId}`);
-					showSnackbar(`Ligação finalizada com sucesso!`);
+		// Desligando a chamada para poder ficar no estado de WRAP. O estado Wrap evita cair outras chamadas até que ele finalize a tabulação.
+        function hangupRequest() {
+            if (callIdSource === 'sendChangeManualCallState') {
 
-					globalCallId = null;
-				});
-			} else {
-				console.error('Nenhum callId armazenado para finalizar a ligação');
-				showSnackbar(`Nenhum callId armazenado para finalizar a ligação`);
+				agentWS.hangupRequest(globalCallIdAtiva, (callId) => {
+                    console.log(`Ligação finalizada com sucesso: ${callId} (Origem: ${callIdSource})`);
+                    showSnackbar(`Sucesso`);
+                });
+			} else if (callIdSource === 'callScreenPop') {
+
+                agentWS.hangupRequest(globalCallId, (callId) => {
+                    console.log(`Ligação finalizada com sucesso: ${callId} (Origem: ${callIdSource})`);
+					showSnackbar(`Sucesso`);
+                });
+            } else {
+                console.error('Origem desconhecida do callId');
+                showSnackbar('Erro: Origem desconhecida da ligação');
 			}
-		}
+
+			showSnackbar('Sucesso');
+        }
 
 		function sendManualCallRequest(ddd, phoneNumber, campaignId) {
 			if (ddd && phoneNumber && campaignId) {
-				agentWS.manualCallStateRequest();
+
+				setTimeout(() => {
+					agentWS.manualCallStateRequest();
+				}, 1000);
+
 				agentWS.sendManualCallRequest(ddd, phoneNumber, campaignId);
 				console.log('Ligação Manual efetuada com sucesso:', ddd, phoneNumber, campaignId);
-				showSnackbar(`Ligação Manual efetuada com sucesso: ${ddd}, ${phoneNumber}, ${campaignId}`);
+				showSnackbar(`Sucesso: ${ddd}, ${phoneNumber}, ${campaignId}`);
 			} else {
 				console.error('Parâmetros inválidos para a chamada manual:', ddd, phoneNumber, campaignId);
 				showSnackbar(`Parâmetros inválidos para a chamada manual: ${ddd}, ${phoneNumber}, ${campaignId}`);
@@ -9112,12 +9156,12 @@
 
 		function manualCallMode() {
 			agentWS.manualCallStateRequest();
-			showSnackbar('Modo chamada manual solicitado com sucesso!');
+			showSnackbar('Sucesso');
 		}
 
 		function endManualCallStateRequest() {
 			agentWS.endManualCallStateRequest();
-			showSnackbar('Modo chamada manual encerrado com sucesso!');
+			showSnackbar('Sucesso');
 		}
 
 		return {
@@ -9126,7 +9170,6 @@
 			sendManualCallRequest,
 			listReasons,
 			agentIdleRequest,
-			agentReasonRequest,
 			listDispositions,
 			hangupAndDispositionCallByCode,
 			hangupRequest,

@@ -43,9 +43,17 @@
                     </a>
                 </section>
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-end" role="toolbar">
+                    <button class="mdc-button mdc-button--filled blue darken-2 mr-3" type="button" disabled="disabled">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">
+                            <asp:Label ID="lblActiveConnections" runat="server" Text="Conexões ativas: 0"></asp:Label>
+                        </span>
+                        <i class="material-icons mdc-button__icon" aria-hidden="true">sensors</i>
+                    </button>
+
                     <asp:UpdatePanel ID="updatePanelHangup" UpdateMode="Conditional" runat="server">
                         <ContentTemplate>
-                            <button id="btnHangup" class="mdc-button mdc-button--raised red darken-4 mr-2">
+                            <button id="btnHangup" class="mdc-button mdc-button--raised red darken-4 mr-2" type="button">
                                 <span class="mdc-button__ripple"></span>
                                 <span class="mdc-button__label">Desligar</span>
                                 <i class="material-icons mdc-button__icon" aria-hidden="true">phone_disabled</i>
@@ -55,7 +63,7 @@
 
                     <asp:UpdatePanel ID="updatePanelLogout" UpdateMode="Conditional" runat="server">
                         <ContentTemplate>
-                            <button class="mdc-button mdc-button--raised red darken-4" id="btnLogout">
+                            <button class="mdc-button mdc-button--raised red darken-4" id="btnLogout" type="button">
                                 <span class="mdc-button__ripple"></span>
                                 <span class="mdc-button__label">Logout</span>
                                 <i class="material-icons mdc-button__icon" aria-hidden="true">logout</i>
@@ -67,7 +75,7 @@
         </header>
 
         <section class="pt-6">
-            <div class="container pb-6 pt-6">
+            <div class="container pb-6 pt-6 pr-5 pl-5 container-100">
                 <div class="row">
                     <div class="col s12">
                         <div class="card card-border blue darken-3">
@@ -99,7 +107,7 @@
                             <div class="card-tabs">
                                 <ul class="tabs tabs-fixed-width blue darken-4">
                                     <li class="tab"><a href="#pausas" class="active flow-text">Pausas</a></li>
-                                    <li class="tab"><a href="#dispositons" class="flow-text">Dispositions</a></li>
+                                    <li class="tab"><a href="#dispositons" class="flow-text">Tabulação</a></li>
                                     <li class="tab"><a href="#ligacaoManual" class="flow-text">Ligação manual</a></li>
                                 </ul>
                             </div>
@@ -107,10 +115,10 @@
                                 <div id="pausas">
                                     <asp:DropDownList ID="ddlPausas" CssClass="browser-default blue darken-4 border-radius font-color-white mb-3" runat="server" />
                                     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 container-gap">
-                                        <button class="mdc-button mdc-button--raised green darken-4" id="btnPausa" type="button">
+                                        <button class="mdc-button mdc-button--raised blue darken-4" id="btnListarReasons">
                                             <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Enviar pausa</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
+                                            <span class="mdc-button__label">Listar pausas</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">list_alt</i>
                                         </button>
 
                                         <button class="mdc-button mdc-button--raised blue darken-4" id="btnRetornar" type="button">
@@ -119,10 +127,10 @@
                                             <i class="material-icons mdc-button__icon" aria-hidden="true">flip_to_back</i>
                                         </button>
 
-                                        <button class="mdc-button mdc-button--raised blue darken-4" id="btnListarReasons">
+                                        <button class="mdc-button mdc-button--raised green darken-4" id="btnPausa" type="button">
                                             <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Listar pausas</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">list_alt</i>
+                                            <span class="mdc-button__label">Enviar pausa</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
                                         </button>
                                     </div>
                                 </div>
@@ -132,33 +140,35 @@
                                     </div>
 
                                     <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 container-gap">
+                                        <button id="btnSendDisposition" class="mdc-button mdc-button--raised blue darken-4" type="button">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Listar tabulações</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">list_alt</i>
+                                        </button>
+
                                         <button id="btnThrowDisposition" class="mdc-button mdc-button--raised green darken-4" type="button">
                                             <span class="mdc-button__ripple"></span>
                                             <span class="mdc-button__label">Tabular</span>
                                             <i class="material-icons mdc-button__icon" aria-hidden="true">send</i>
                                         </button>
-
-                                        <button id="btnSendDisposition" class="mdc-button mdc-button--raised blue darken-4" type="button">
-                                            <span class="mdc-button__ripple"></span>
-                                            <span class="mdc-button__label">Listar dispositions</span>
-                                            <i class="material-icons mdc-button__icon" aria-hidden="true">list_alt</i>
-                                        </button>
                                     </div>
                                 </div>
                                 <div id="ligacaoManual">
-                                    <button id="btnManualCallState" class="mdc-button mdc-button--raised blue darken-4 mb-5 mr-3" type="button">
+                                    <button id="btnManualCallState" class="mdc-button mdc-button--raised blue darken-4 mr-3" type="button">
                                         <span class="mdc-button__ripple"></span>
                                         <span class="mdc-button__label">Modo Manual</span>
                                         <i class="material-icons mdc-button__icon" aria-hidden="true">dialpad</i>
                                     </button>
 
-                                    <button id="btnManualCallEnd" class="mdc-button mdc-button--raised blue darken-4 mb-5" type="button">
+                                    <button id="btnManualCallEnd" class="mdc-button mdc-button--raised blue darken-4" type="button">
                                         <span class="mdc-button__ripple"></span>
                                         <span class="mdc-button__label">Encerrar modo manual</span>
-                                        <i class="material-icons mdc-button__icon" aria-hidden="true">reply</i>
+                                        <i class="material-icons mdc-button__icon" aria-hidden="true">flip_to_back</i>
                                     </button>
 
-                                    <div class="row d-flex align-items-center">
+                                    <hr class="custom-hr" />
+
+                                    <div class="row d-flex pb-3">
                                         <div class="input-field filled-in col s3">
                                             <input id="inputDdd" class="blue darken-4" maxlength="2" placeholder=" ">
                                             <label for="inputDdd">DDD</label>
@@ -168,13 +178,14 @@
                                             <input id="inputPhoneNumber" class="blue darken-4" maxlength="9" placeholder=" ">
                                             <label for="inputPhoneNumber">Telefone</label>
                                         </div>
+                                    </div>
 
-                                        <div class="input-field center-align">
-                                            <button class="mdc-fab green darken-4" id="btnCallRequest" type="button" aria-label="phone">
-                                                <span class="mdc-fab__ripple"></span>
-                                                <i class="material-icons mdc-fab__icon">phone</i>
-                                            </button>
-                                        </div>
+                                    <div class="d-flex">
+                                        <button id="btnCallRequest" class="mdc-button mdc-button--raised green darken-4" type="button">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Discar</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">phone</i>
+                                        </button>
                                     </div>
                                 </div>
                             </div>

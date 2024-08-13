@@ -64,3 +64,13 @@ C:\Users\Claudio\Desktop\OlosAgentSDK\bin\System.Runtime.CompilerServices.Unsafe
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\System.Threading.Tasks.Extensions.xml
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\System.Web.Http.xml
 C:\Users\Claudio\Desktop\OlosAgentSDK\bin\System.Web.Http.Cors.xml
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\HtmlRenderer.dll
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\HtmlRenderer.PdfSharp.dll
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\PdfSharp.Charting.dll
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\PdfSharp.dll
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\HtmlRenderer.pdb
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\HtmlRenderer.PdfSharp.pdb
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\PdfSharp.xml
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\PdfSharp.Charting.xml
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\de\PdfSharp.resources.dll
+C:\Users\Claudio\Desktop\OlosAgentSDK\bin\de\PdfSharp.Charting.resources.dll

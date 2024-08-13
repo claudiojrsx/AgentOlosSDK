@@ -3,16 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\olosagentauthenticated.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}",
-      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:olosagentauthenticated.aspx||{57312C73-6202-49E9-B1E1-40EA1A6DC1F6}"
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:startup.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\utils\\utilities.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:utils\\utilities.aspx.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|c:\\users\\claudio\\desktop\\olosagentsdk\\public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
       "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:public\\js\\olosagentsdk.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\handlers.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}",
-      "RelativeMoniker": "D:0:0:{D461CA8E-BBA8-4BDE-A3A9-61B15E931513}|OlosAgentSDK.csproj|solutionrelative:public\\js\\handlers.js||{14D17961-FE51-464D-9111-C4AF11D7D99A}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,15 +22,11 @@
       "DocumentGroups": [
         {
           "DockedHeight": 275,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 4,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{809f6ff3-8092-454a-8003-6d4091f9b5bb}"
-            },
-            {
-              "$type": "Bookmark",
-              "Name": "ST:11:0:{2456bd12-ecf7-4988-a4a6-67d49173f565}"
             },
             {
               "$type": "Bookmark",
@@ -47,39 +43,41 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "OlosAgentAuthenticated.aspx",
-              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx",
-              "RelativeDocumentMoniker": "OlosAgentAuthenticated.aspx",
-              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\OlosAgentAuthenticated.aspx",
-              "RelativeToolTip": "OlosAgentAuthenticated.aspx",
-              "LogicalView": "7651a703-06e5-11d1-8ebd-00a0c90f26ea",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000195|",
-              "WhenOpened": "2024-08-08T13:49:12.791Z",
+              "Title": "Startup.cs",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Startup.cs",
+              "RelativeDocumentMoniker": "Startup.cs",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Startup.cs",
+              "RelativeToolTip": "Startup.cs",
+              "ViewState": "AQIAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-13T18:40:09.088Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Utilities.aspx.cs",
+              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Utils\\Utilities.aspx.cs",
+              "RelativeDocumentMoniker": "Utils\\Utilities.aspx.cs",
+              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\Utils\\Utilities.aspx.cs",
+              "RelativeToolTip": "Utils\\Utilities.aspx.cs",
+              "ViewState": "AQIAAGoAAAAAAAAAAAAcwIgAAAAJAAAA",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-13T18:39:51.366Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
               "Title": "olosagentsdk.js",
               "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js",
               "RelativeDocumentMoniker": "public\\js\\olosagentsdk.js",
               "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\olosagentsdk.js",
               "RelativeToolTip": "public\\js\\olosagentsdk.js",
-              "ViewState": "AQIAAGQjAAAAAAAAAAAMwIgjAAAiAAAA",
+              "ViewState": "AQIAAJkhAAAAAAAAAAAUwKchAAA7AAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-08-08T11:24:11.438Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "handlers.js",
-              "DocumentMoniker": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\handlers.js",
-              "RelativeDocumentMoniker": "public\\js\\handlers.js",
-              "ToolTip": "C:\\Users\\Claudio\\Desktop\\OlosAgentSDK\\public\\js\\handlers.js",
-              "RelativeToolTip": "public\\js\\handlers.js",
-              "ViewState": "AQIAAAkAAAAAAAAAAAAAAC8AAAAAAAAA",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001646|",
-              "WhenOpened": "2024-08-08T12:14:25.191Z"
+              "WhenOpened": "2024-08-13T18:30:12.655Z",
+              "EditorCaption": ""
             }
           ]
         }
