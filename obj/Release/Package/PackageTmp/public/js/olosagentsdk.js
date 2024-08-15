@@ -8610,28 +8610,28 @@
 		var globalCobPhoneNumber = null;
 
 		// Interações automáticas assim que abre a página.
-		$(document).ready(function () {
-			function updateConnections() {
-				$.ajax({
-					url: "/Utils/Utilities.aspx/GetActiveConnectionsMethod",
-					type: "POST",
-					contentType: "application/json; charset=utf-8",
-					dataType: "json",
-					success: function (response) {
-						var data = JSON.parse(response.d);
+		//$(document).ready(function () {
+		//	function updateConnections() {
+		//		$.ajax({
+		//			url: "/Utils/Utilities.aspx/GetActiveConnectionsMethod",
+		//			type: "POST",
+		//			contentType: "application/json; charset=utf-8",
+		//			dataType: "json",
+		//			success: function (response) {
+		//				var data = JSON.parse(response.d);
 
-						$("#lblActiveConnections").text("Conexões ativas: " + data.connections);
-					},
-					failure: function (response) {
-						console.log("Erro ao buscar conexões ativas: " + response);
-					}
-				});
-			}
+		//				$("#lblActiveConnections").text("Conexões ativas: " + data.connections);
+		//			},
+		//			failure: function (response) {
+		//				console.log("Erro ao buscar conexões ativas: " + response);
+		//			}
+		//		});
+		//	}
 
-			setInterval(updateConnections, 5000);
+		//	setInterval(updateConnections, 5000);
 
-			updateConnections();
-		});
+		//	updateConnections();
+		//});
 
 		$(document).ready(function () {
 			$('#btnCallRequest').click(function () {

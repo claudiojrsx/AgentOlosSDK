@@ -36,7 +36,7 @@
         <asp:ScriptManager ID="ScriptManager" runat="server"></asp:ScriptManager>
 
         <header id="top-app-bar" class="mdc-top-app-bar blue darken-4">
-            <div class="mdc-top-app-bar__row">
+            <div class="mdc-top-app-bar__row menu-info">
                 <section class="mdc-top-app-bar__section mdc-top-app-bar__section--align-start">
                     <a href="#" class="brand-logo left mt-2 white-text mdc-top-app-bar__title">
                         <img src="public/logo/cob-olos.png" alt="Logo da OLOS" style="height: 60px;">
@@ -46,7 +46,7 @@
                     <button class="mdc-button mdc-button--filled blue darken-2 mr-3" type="button" disabled="disabled">
                         <span class="mdc-button__ripple"></span>
                         <span class="mdc-button__label">
-                            <asp:Label ID="lblActiveConnections" runat="server" Text="Conexões ativas: 0"></asp:Label>
+                            <asp:Label ID="lblActiveConn" runat="server"></asp:Label>
                         </span>
                         <i class="material-icons mdc-button__icon" aria-hidden="true">sensors</i>
                     </button>
@@ -154,17 +154,20 @@
                                     </div>
                                 </div>
                                 <div id="ligacaoManual">
-                                    <button id="btnManualCallState" class="mdc-button mdc-button--raised blue darken-4 mr-3" type="button">
-                                        <span class="mdc-button__ripple"></span>
-                                        <span class="mdc-button__label">Modo Manual</span>
-                                        <i class="material-icons mdc-button__icon" aria-hidden="true">dialpad</i>
-                                    </button>
 
-                                    <button id="btnManualCallEnd" class="mdc-button mdc-button--raised blue darken-4" type="button">
-                                        <span class="mdc-button__ripple"></span>
-                                        <span class="mdc-button__label">Encerrar modo manual</span>
-                                        <i class="material-icons mdc-button__icon" aria-hidden="true">flip_to_back</i>
-                                    </button>
+                                    <div class="mdc-layout-grid__cell mdc-layout-grid__cell--span-12 container-gap">
+                                        <button id="btnManualCallState" class="mdc-button mdc-button--raised blue darken-4" type="button">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Modo Manual</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">dialpad</i>
+                                        </button>
+
+                                        <button id="btnManualCallEnd" class="mdc-button mdc-button--raised blue darken-4" type="button">
+                                            <span class="mdc-button__ripple"></span>
+                                            <span class="mdc-button__label">Encerrar modo manual</span>
+                                            <i class="material-icons mdc-button__icon" aria-hidden="true">flip_to_back</i>
+                                        </button>
+                                    </div>
 
                                     <hr class="custom-hr" />
 
@@ -199,6 +202,89 @@
                 </div>
             </div>
         </section>
+
+        <div id="divReturnEmail" class="lightboxdivModalPhone col-lg-12" hidden="hidden">
+            <asp:UpdatePanel runat="server" ID="updReturnEmail" UpdateMode="Conditional">
+                <ContentTemplate>
+                    <asp:HiddenField ID="ClickedLinkId" runat="server" />
+        
+                    <div class="panel panel-white">
+                        <div class="panel-heading">
+                            <div>
+                                <ul class="nav nav-tabs padding-10" role="tablist">
+                                    <li role="presentation" class="active">
+                                        <a href="#UpdEmails" id="UpdEmails1" class="nome_aba-dash font-size-aba" role="tab" data-toggle="tab" onclick="storeLinkId(this.id)">Atualização cadastral</a>
+                                    </li>
+                                    <li role="presentation">
+                                        <a href="#InsertEmails" id="InsertEmails1" class="nome_aba-dash font-size-aba" role="tab" data-toggle="tab" onclick="storeLinkId(this.id)">Inserir novo e-mail</a>
+                                    </li>
+                                </ul>
+                            </div>
+        
+                            <a id="aReturnAtuEmail"
+                                onclick="this.style.display='none';placeholdervalida();this.style.display='block';window.parent.chamaaguarde();"
+                                onserverclick="aReturnAtuEmail_Click"
+                                style="margin: -25px 60px;"
+                                class="botao-aceitar"
+                                runat="server"></a>
+        
+                            <a onclick="FechaBox(GetDadClass(this,'lightboxdiv'));"
+                                style="margin: -25px 0;"
+                                class="botao-resetar"></a>
+                        </div>
+        
+                        <div role="tabpanel" class="tab-pane active fade in" id="UpdEmails">
+                            <div class="panel-body">
+                                <div class="padding-up-b">
+                                    <asp:Label ID="lblReturnEmails" CssClass="label-weights" Text="Atualização cadastral (Return) - E-mails" runat="server" />
+                                </div>
+        
+                                <asp:GridView ID="gdvReturnEmail" CssClass="tabela_nova display table-striped table-bordered dt-responsive responsive nowrap" CellSpacing="0" Width="100%" EmptyDataText="Não existe e-mail cadastrado para esse cliente." AutoGenerateColumns="false" runat="server">
+                                    <Columns>
+                                        <asp:BoundField DataField="ContactID" HeaderText="N Cliente" />
+                                        <asp:BoundField DataField="EmailID" HeaderText="Id Email" />
+                                        <asp:BoundField DataField="Email" HeaderText="Email" />
+                                        <asp:BoundField DataField="EmailStatus" HeaderText="Status Atual" />
+                                        <asp:TemplateField HeaderText="Status">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="ddlReturnStatusEmail" runat="server">
+                                                    <asp:ListItem Text="Status: " Value="-1"></asp:ListItem>
+                                                    <asp:ListItem Text="Incorreto" Value="1"></asp:ListItem>
+                                                    <asp:ListItem Text="Não definido" Value="2"></asp:ListItem>
+                                                    <asp:ListItem Text="Correto" Value="3"></asp:ListItem>
+                                                    <asp:ListItem Text="Verificado" Value="4"></asp:ListItem>
+                                                </asp:DropDownList>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                        <asp:TemplateField HeaderText="Primário">
+                                            <ItemTemplate>
+                                                <asp:DropDownList ID="ddlReturnPrimarioEmail" runat="server">
+                                                    <asp:ListItem Text="Primário: " Value="-1"></asp:ListItem>
+                                                    <asp:ListItem Text="Sim" Value="1"></asp:ListItem>
+                                                    <asp:ListItem Text="Não" Value="0"></asp:ListItem>
+                                                </asp:DropDownList>
+                                            </ItemTemplate>
+                                        </asp:TemplateField>
+                                    </Columns>
+                                </asp:GridView>
+                            </div>
+                        </div>
+                        <%-- Fim do panel-body de atualização de e-mails --%>
+        
+                        <div role="tabpanel" class="tab-pane fade in" id="InsertEmails">
+                            <div class="panel-body" visible="false">
+                                <div class="padding-up-b">
+                                    <asp:Label ID="lblReturnInsertEmails" CssClass="label-weights" Text="Inserir novo e-mail" runat="server" />
+                                </div>
+        
+                                <asp:Label ID="lblReturnInsertEmail" CssClass="label-weights" Text="Digite o e-mail" AssociatedControlID="txtReturnInsertEmail" runat="server" />
+                                <asp:TextBox ID="txtReturnInsertEmail" CssClass="form-control" Placeholder=" Digite o e-mail" runat="server" />
+                            </div>
+                        </div>
+                    </div>
+                </ContentTemplate>
+            </asp:UpdatePanel>
+        </div>
     </form>
 </body>
 

@@ -46,10 +46,18 @@
                     <button class="mdc-button mdc-button--filled blue darken-2 mr-3" type="button" disabled="disabled">
                         <span class="mdc-button__ripple"></span>
                         <span class="mdc-button__label">
-                            <asp:Label ID="lblActiveConnections" runat="server" Text="Conexões ativas: 0"></asp:Label>
+                            <asp:Label ID="lblActiveConn" runat="server"></asp:Label>
                         </span>
                         <i class="material-icons mdc-button__icon" aria-hidden="true">sensors</i>
                     </button>
+
+                    <%--<button class="mdc-button mdc-button--filled blue darken-2 mr-3" type="button" disabled="disabled">
+                        <span class="mdc-button__ripple"></span>
+                        <span class="mdc-button__label">
+                            <asp:Label ID="lblActiveConnections" runat="server" Text="Conexões ativas: 0"></asp:Label>
+                        </span>
+                        <i class="material-icons mdc-button__icon" aria-hidden="true">sensors</i>
+                    </button>--%>
 
                     <asp:UpdatePanel ID="updatePanelHangup" UpdateMode="Conditional" runat="server">
                         <ContentTemplate>

@@ -20,11 +20,6 @@ namespace OlosAgentSDK
             Response.Cache.SetCacheability(HttpCacheability.NoCache);
             Response.Cache.SetNoStore();
 
-            if (!IsPostBack)
-            {
-                Startup.Session_Start(null, null);
-            }
-
             try
             {
                 string agentLogin = GetDecodedQueryString("A");

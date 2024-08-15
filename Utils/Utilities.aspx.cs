@@ -5,7 +5,6 @@ using System.Collections.Generic;
 using System.Web.Script.Services;
 using System.Web.Services;
 using System.Web;
-using System.Web.Script.Serialization;
 
 namespace OlosAgentSDK.Utils
 {
@@ -120,20 +119,6 @@ namespace OlosAgentSDK.Utils
             {
                 return $"Erro: {ex.Message}";
             }
-        }
-
-        [WebMethod]
-        public static string GetActiveConnectionsMethod()
-        {
-            var activeConnections = Startup.GetActiveConnections();
-
-            int totalConnections = 0;
-            foreach (var connection in activeConnections)
-            {
-                totalConnections += connection.Value;
-            }
-
-            return new JavaScriptSerializer().Serialize(new { connections = totalConnections });
         }
     }
 }
